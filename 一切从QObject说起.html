@@ -1,0 +1,788 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>一切从QObject说起 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="https://joggingjack.fun" target="_blank" class="custom-link">JoggingJack'Home</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="一切从QObject说起.html">
+            
+                <a href="一切从QObject说起.html">
+            
+                    
+                    一切从QObject说起
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >一切从QObject说起</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="&#x6982;&#x8FF0;">&#x6982;&#x8FF0;</h2>
+<p>&#x5B66;&#x4E60;&#x548C;&#x7406;&#x89E3;&#x4EFB;&#x4F55;&#x6846;&#x67B6;&#x6216;&#x5E93;&#xFF0C;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x53EF;&#x80FD;&#x90FD;&#x662F;&#x6700;&#x6743;&#x5A01;&#x3001;&#x6700;&#x6709;&#x6548;&#x7684;&#x4FE1;&#x606F;&#x3002;<code>Qt</code>&#x4E5F;&#x4E0D;&#x4F8B;&#x5916;&#xFF0C;<a href="https://doc.qt.io/qt-5/index.html" target="_blank">https://doc.qt.io/qt-5/index.html</a></p>
+<p>&#x5728;&#x6587;&#x6863;&#x7684;Core Internals&#x5C0F;&#x8282;&#xFF0C;&#x9610;&#x8FF0;&#x4E86;<code>Qt Core</code>&#x6A21;&#x5757;&#x662F;&#x6574;&#x4E2A;<code>Qt</code>&#x6846;&#x67B6;&#x7684;&#x57FA;&#x7840;&#xFF0C;&#x5176;&#x4E2D;<code>QObject</code>&#x7C7B;&#x6784;&#x6210;&#x4E86;<code>Qt</code>&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#xFF08;object model&#xFF09;&#x7684;&#x57FA;&#x7840;&#xFF0C;&#x662F;&#x8BB8;&#x591A;<code>Qt</code>&#x7C7B;&#x7684;&#x7236;&#x7C7B;&#x3002;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x5F15;&#x5165;&#x4E86;&#x8BB8;&#x591A;&#x673A;&#x5236;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;</p>
+<ul>
+<li>&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#xFF08;meta-object system&#xFF09;</li>
+<li>&#x5C5E;&#x6027;&#x7CFB;&#x7EDF;&#xFF08;The Property System&#xFF09;</li>
+<li>&#x4E8B;&#x4EF6;&#x7CFB;&#x7EDF;&#xFF08;event system&#xFF09;</li>
+<li>&#x4FE1;&#x53F7;&#x548C;&#x69FD;&#x673A;&#x5236;&#xFF08;signals and slots mechanism&#xFF09;</li>
+<li>&#x72B6;&#x6001;&#x673A;&#x6846;&#x67B6;&#xFF08;State Machine Framework&#xFF09;&#x3002;</li>
+<li>...</li>
+</ul>
+<p><code>QObject</code>&#x7C7B;&#x662F;&#x8FD9;&#x4E2A;&#x6A21;&#x578B;&#x7684;&#x57FA;&#x7840;&#x4E5F;&#x662F;&#x7EDD;&#x5927;&#x591A;&#x6570;&#x7C7B;&#x7684;&#x7236;&#x7C7B;&#x3002;&#x65E2;&#x7136;&#x8FD9;&#x6837;&#xFF0C;&#x90A3;&#x6211;&#x4EEC;&#x5C31;&#x4ECE;&#x4E00;&#x5207;&#x6545;&#x4E8B;&#x7684;&#x6E90;&#x5934;&#x2014;&#x2014;<code>QObject</code>&#x7C7B;&#x5F00;&#x59CB;&#x4E00;&#x63A2;&#x7A76;&#x7ADF;&#x3002;</p>
+<p>&#x76F4;&#x63A5;&#x627E;&#x5230;<code>QObject</code>&#x7684;&#x5B9A;&#x4E49;&#xFF0C;&#x603B;&#x5171;300+&#x884C;&#xFF0C;&#x6709;&#x975E;&#x5E38;&#x591A;&#x7684;&#x6210;&#x5458;&#xFF0C;&#x6D4F;&#x89C8;&#x4E0B;&#x6765;&#x4E5F;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x4E00;&#x4E9B;&#x719F;&#x6089;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x4F46;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x4E0D;&#x80FD;&#x4E00;&#x4E00;&#x5C55;&#x5F00;&#xFF0C;&#x5B83;&#x662F;&#x5927;&#x90E8;&#x5206;&#x6846;&#x67B6;&#x7684;&#x57FA;&#x7840;&#xFF0C;&#x505A;&#x4E86;&#x5F88;&#x591A;&#x57FA;&#x7840;&#x6027;&#x7684;&#x5DE5;&#x4F5C;&#xFF0C;&#x6211;&#x4EEC;&#x76EE;&#x524D;&#x8FD8;&#x4E0D;&#x6E05;&#x695A;&#x5B83;&#x4EEC;&#x7684;&#x4F5C;&#x7528;&#xFF0C;&#x592A;&#x8FC7;&#x8FFD;&#x6C42;&#x7EC6;&#x679D;&#x672B;&#x8282;&#x53EA;&#x4F1A;&#x8BA9;&#x6211;&#x4EEC;&#x8FF7;&#x5931;&#x5728;&#x6D69;&#x701A;&#x7684;&#x6E90;&#x7801;&#x6D77;&#x6D0B;&#x91CC;&#x3002;&#x6839;&#x636E;&#x524D;&#x9762;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x83B7;&#x5F97;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x6211;&#x4EEC;&#x6392;&#x9664;&#x548C;&#x5176;&#x4ED6;&#x884D;&#x751F;&#x673A;&#x5236;&#x76F8;&#x5173;&#x7684;&#x6210;&#x5458;&#xFF0C;&#x53EA;&#x62FF;&#x51FA;<code>QObject</code>&#x7684;&#x91CD;&#x8981;&#x53D8;&#x91CF;&#x548C;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x770B;&#x770B;&#x4E00;&#x4E2A;<code>QObject</code>&#x7684;&#x4E3B;&#x8981;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x548C;&#x521D;&#x59CB;&#x5316;&#x90FD;&#x505A;&#x4E86;&#x4EC0;&#x4E48;&#xFF1A;</p>
+<pre><code class="lang-C++">//qobject.h
+class Q_CORE_EXPORT Qobject{
+    Q_OBJECT
+    Q_PROPERTY(QString objectName READ objectName WRITE setObjectName NOTIFY objectNameChanged)
+    Q_DECLARE_PRIVATE(QObject)
+public:
+    Q_INVOKABLE explicit QObject(QObject *parent=nullptr);
+    virtual ~QObject();
+    //...
+protected:
+    QObject(QObjectPrivate &amp;dd, QObject *parent = nullptr);
+    //...
+protected:
+    QScopedPointer&lt;QObjectData&gt; d_ptr;
+    static const QMetaObject staticQtMetaObject;
+    //...
+private:
+    Q_DISABLE_COPY(QObject)
+    //...
+}
+</code></pre>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x7565;&#x53BB;&#x5927;&#x90E8;&#x5206;<code>virtual</code>&#x548C;<code>public</code>&#x65B9;&#x6CD5;&#x540E;&#xFF0C;<code>Qobject</code>&#x5185;&#x90E8;&#x6CA1;&#x6709;&#x5F88;&#x591A;&#x53D8;&#x91CF;&#x3002;&#x63A5;&#x4E0B;&#x6765;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x770B;&#x5269;&#x4E0B;&#x7684;&#x8FD9;&#x4E9B;&#x6210;&#x5458;&#x3002;</p>
+<h2 id="qobject"><code>Q_OBJECT</code></h2>
+<p>&#x67E5;&#x770B;<code>Q_OBJECT</code>&#x7684;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobjectdefs.h</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> Q_OBJECT \
+public: \
+    QT_WARNING_PUSH \
+    Q_OBJECT_NO_OVERRIDE_WARNING \
+    static const QMetaObject staticMetaObject; \
+    virtual const QMetaObject *metaObject() const; \
+    virtual void *qt_metacast(const char *); \
+    virtual int qt_metacall(QMetaObject::Call, int, void **); \
+    QT_TR_FUNCTIONS \
+private: \
+    Q_OBJECT_NO_ATTRIBUTES_WARNING \
+    Q_DECL_HIDDEN_STATIC_METACALL static void qt_static_metacall(QObject *, QMetaObject::Call, int, void **); \
+    QT_WARNING_POP \
+    struct QPrivateSignal {}; \
+    QT_ANNOTATE_CLASS(qt_qobject, <span class="hljs-string">&quot;&quot;</span>)</span>
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x5148;&#x770B;&#x4E00;&#x4E9B;&#x5B8F;&#x7684;&#x529F;&#x80FD;&#xFF1A;</p>
+<p><code>QT_WARNING_PUSH</code> &#x548C; <code>QT_WARNING_POP</code>&#x8FD9;&#x4E24;&#x4E2A;&#x5B8F;&#x7528;&#x4E8E;&#x4FDD;&#x5B58;&#x548C;&#x8FD8;&#x539F;&#x7F16;&#x8BD1;&#x5668;&#x7684;&#x8B66;&#x544A;&#x8BBE;&#x7F6E;&#xFF0C;&#x4FDD;&#x8BC1;&#x4E24;&#x4E2A;&#x5B8F;&#x5185;&#x4E0D;&#x4F1A;&#x4EA7;&#x751F;&#x4E0D;&#x5FC5;&#x8981;&#x7684;&#x8B66;&#x544A;&#x3002;</p>
+<p><code>Q_OBJECT_NO_OVERRIDE_WARNING</code>&#x548C;<code>Q_OBJECT_NO_ATTRIBUTES_WARNING</code>&#x8FD9;&#x4E24;&#x4E2A;&#x5B8F;&#x7528;&#x4E8E;&#x63A7;&#x5236;&#x662F;&#x5426;&#x53D1;&#x51FA;&#x5173;&#x4E8E;&#x672A;&#x8986;&#x76D6;&#xFF08;override&#xFF09;&#x7684;&#x8B66;&#x544A;&#x6216;&#x8005;&#x5173;&#x4E8E;&#x67D0;&#x4E9B;&#x5C5E;&#x6027;&#x7684;&#x8B66;&#x544A;&#x3002;</p>
+<p><code>QT_TR_FUNCTIONS</code>&#x8FD9;&#x4E2A;&#x5B8F;&#x7528;&#x4E8E;&#x542F;&#x7528;<code>Qt</code>&#x7684;&#x56FD;&#x9645;&#x5316;&#xFF08;internationalization&#xFF09;&#x529F;&#x80FD;&#xFF0C;&#x4F7F;&#x5F97;&#x6587;&#x672C;&#x53EF;&#x4EE5;&#x88AB;&#x7FFB;&#x8BD1;&#x4E3A;&#x4E0D;&#x540C;&#x7684;&#x8BED;&#x8A00;&#x3002;</p>
+<p>&#x5173;&#x4E8E;<code>Q_DECL_HIDDEN_STATIC_METACALL</code>&#xFF0C;&#x627E;&#x5230;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobjectdefs.h</span>
+<span class="hljs-meta"># <span class="hljs-meta-keyword">define</span> Q_DECL_HIDDEN_STATIC_METACALL Q_DECL_HIDDEN</span>
+</code></pre>
+<p>&#x4F7F;&#x7528; <code>Q_DECL_HIDDEN</code> &#x53EF;&#x4EE5;&#x5C06;&#x7C7B;&#x6216;&#x51FD;&#x6570;&#x6807;&#x8BB0;&#x4E3A;&#x5728;&#x5916;&#x90E8;&#x63A5;&#x53E3;&#x4E2D;&#x9690;&#x85CF;&#x7684;&#xFF0C;&#x4ECE;&#x800C;&#x4F7F;&#x5B83;&#x4EEC;&#x5BF9;&#x5E93;&#x7684;&#x7528;&#x6237;&#x4E0D;&#x53EF;&#x89C1;&#x3002;&#x8FD9;&#x5BF9;&#x4E8E;&#x907F;&#x514D;&#x4E00;&#x4E9B;&#x94FE;&#x63A5;&#x65F6;&#x7684;&#x7B26;&#x53F7;&#x51B2;&#x7A81;&#x548C;&#x63D0;&#x9AD8;&#x5E93;&#x7684;&#x5C01;&#x88C5;&#x6027;&#x5F88;&#x6709;&#x5E2E;&#x52A9;&#x3002;&#x8FD9;&#x4E2A;&#x5B8F;&#x53EF;&#x80FD;&#x4F1A;&#x88AB;&#x7FFB;&#x8BD1;&#x6210; <code>__attribute__((visibility(&quot;hidden&quot;)))</code>&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;<code>qt_static_metacall</code>&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x6CA1;&#x7528;&#x5230;&#xFF0C;&#x6211;&#x4EEC;&#x5FFD;&#x7565;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x53BB;&#x9664;&#x8FD9;&#x4E9B;&#x548C;&#x7F16;&#x8BD1;&#x5668;&#x76F8;&#x5173;&#x7684;&#x5B8F;&#xFF0C;<code>Q_OBJECT</code>&#x5269;&#x4E0B;&#x7684;&#x5173;&#x952E;&#x90E8;&#x5206;&#xFF1A;</p>
+<pre><code class="lang-c++"><span class="hljs-comment">//qobjectdefs.h</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> Q_OBJECT \
+public: \
+    static const QMetaObject staticMetaObject; \
+    virtual const QMetaObject *metaObject() const; \
+    virtual void *qt_metacast(const char *); \
+    virtual int qt_metacall(QMetaObject::Call, int, void **); \
+private: \
+    Q_DECL_HIDDEN_STATIC_METACALL static void qt_static_metacall(QObject *, QMetaObject::Call, int, void **); \
+</span></code></pre>
+<p><code>Q_OBJECT</code>&#x5B8F;&#x58F0;&#x660E;&#x4E86;1&#x4E2A;<code>QMetaObject</code>&#x53D8;&#x91CF;&#x548C;3&#x4E2A;<code>QMetaObject</code>&#x76F8;&#x5173;&#x7684;&#x865A;&#x51FD;&#x6570;&#x3002;<code>QMetaObject</code>&#x7C7B;&#x975E;&#x5E38;&#x91CD;&#x8981;&#xFF0C;&#x548C;&#x524D;&#x9762;&#x63D0;&#x5230;&#x7684;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#x76F8;&#x5173;&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x4E0D;&#x5C55;&#x5F00;&#x8BB2;&#x89E3;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#xFF0C;&#x540E;&#x9762;&#x7684;&#x6587;&#x7AE0;&#x4F1A;&#x5355;&#x72EC;&#x8BB2;&#x89E3;&#x3002;&#x8BB2;&#x5230;<code>Q_OBJECT</code>&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x80FD;&#x719F;&#x6089;&#x2014;&#x2014;&#x58F0;&#x660E;&#x4E86;<code>Q_OBJECT</code>&#x540E;&#x2014;&#x2014;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;signal&amp;slot&#x673A;&#x5236;&#xFF0C;&#x5176;&#x5B9E;&#x8FD8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5F88;&#x591A;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#x63D0;&#x4F9B;&#x7684;&#x5176;&#x4ED6;&#x670D;&#x52A1;&#x3002;&#x603B;&#x800C;&#x8A00;&#x4E4B;&#xFF0C;&#x4F7F;&#x7528;&#x4E86;<code>Q_OBJECT</code>&#x5B8F;&#x540E;&#xFF0C;&#x7C7B;&#x5177;&#x5907;&#x4E86;&#x5143;&#x5BF9;&#x8C61;&#x7684;&#x80FD;&#x529B;&#x3002;</p>
+<h2 id="qproperty"><code>Q_PROPERTY</code></h2>
+<p>&#x67E5;&#x770B;<code>Q_PROPERTY(QString objectName READ objectName WRITE setObjectName NOTIFY objectNameChanged)</code>&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobjectdefs.h</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> Q_PROPERTY(...) QT_ANNOTATE_CLASS(qt_property, __VA_ARGS__)</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> QT_ANNOTATE_CLASS(type, ...)</span>
+</code></pre>
+<p>&#x5728; <code>qobjectdefs.h</code> &#x4E2D;&#x6211;&#x4EEC;&#x5E76;&#x6CA1;&#x6709;&#x770B;&#x5230; <code>Q_PROPERTY</code> &#x7684;&#x51C6;&#x786E;&#x5B9A;&#x4E49;&#xFF0C;&#x800C;&#x662F;&#x5230;&#x6700;&#x540E;&#x621B;&#x7136;&#x800C;&#x6B62;&#x4E86;&#x3002;&#x8FD9;&#x91CC;&#x8981;&#x5F15;&#x51FA;<code>moc&#xFF08;Meta-Object Compiler&#xFF09;</code>&#x2014;&#x2014;&#x5143;&#x5BF9;&#x8C61;&#x7F16;&#x8BD1;&#x5668;&#xFF0C;&#x5F88;&#x591A;<code>Qt</code>&#x7684;&#x5B8F;&#x548C;&#x7279;&#x6B8A;&#x529F;&#x80FD;&#x662F;&#x901A;&#x8FC7;<code>moc</code>&#x751F;&#x6210;&#x7684;&#x4EE3;&#x7801;&#x800C;&#x4E0D;&#x662F;&#x5728;&#x5934;&#x6587;&#x4EF6;&#x4E2D;&#x663E;&#x5F0F;&#x5B9A;&#x4E49;&#x7684;&#x3002;<code>C++</code>&#x7F16;&#x8BD1;&#x5668;&#x80FD;&#x591F;&#x8BC6;&#x522B; <code>Q_PROPERTY</code> &#x5B8F;&#xFF0C;&#x662F;&#x56E0;&#x4E3A;<code>moc</code>&#x7F16;&#x8BD1;&#x65F6;&#x751F;&#x6210;&#x4E86;&#x76F8;&#x5E94;&#x7684;&#x4EE3;&#x7801;&#x3002;</p>
+<p><img src="https://github.com/JoggingJack/PicRepo/blob/main/QtSrcBook/%E4%B8%80%E5%88%87%E4%BB%8EQObject%E8%AF%B4%E8%B5%B7/moc.png?raw=true" alt=""></p>
+<p>&#x6211;&#x4EEC;&#x5229;&#x7528;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x641C;&#x7D22;<code>Q_PROPERTY</code>&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6587;&#x6863;&#x8BF4;&#x4F7F;&#x7528;<code>Q_PROPERTY</code>&#x540E;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x628A;&#x5C5E;&#x6027;&#x7EB3;&#x5165;&#x4E86;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#xFF0C;&#x800C;&#x4E14;&#x7ED9;&#x51FA;&#x4E86;&#x4E00;&#x6BB5;<code>Q_PROPERTY</code>&#x66F4;&#x7EC6;&#x81F4;&#x7684;&#x58F0;&#x660E;&#xFF0C;&#x6211;&#x731C;&#x6D4B;&#x8FD9;&#x4E2A;&#x5E94;&#x8BE5;&#x662F;<code>moc</code>&#x7F16;&#x8BD1;&#x540E;&#x7684;<code>Q_PROPERTY</code>&#x771F;&#x6B63;&#x7684;&#x58F0;&#x660E;&#xFF1A;</p>
+<pre><code class="lang-c++">Q_PROPERTY(type name
+           (READ getFunction [WRITE setFunction] |
+            MEMBER memberName [(READ getFunction | WRITE setFunction)])
+           [RESET resetFunction]
+           [NOTIFY notifySignal]
+           [REVISION int | REVISION(int[, int])]
+           [DESIGNABLE bool]
+           [SCRIPTABLE bool]
+           [STORED bool]
+           [USER bool]
+           [BINDABLE bindableProperty]
+           [CONSTANT]
+           [FINAL]
+           [REQUIRED])
+</code></pre>
+<p>&#x8FD9;&#x91CC;&#x5C31;&#x548C;&#x6211;&#x4EEC;&#x719F;&#x6089;&#x7684;&#x5C5E;&#x6027;&#x7684;&#x5B9A;&#x4E49;&#x7ED3;&#x6784;&#x76F8;&#x4F3C;&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x4E00;&#x822C;&#x5C06;&#x67D0;&#x4E2A;&#x53D8;&#x91CF;&#x4EE5;<code>Q_PROPERTY</code>&#x58F0;&#x660E;&#x4E3A;&#x5C5E;&#x6027;&#x4EE5;&#x540E;&#xFF0C;&#x4F1A;&#x83B7;&#x5F97;<code>setter</code>&#x548C;<code>getter</code>&#x65B9;&#x6CD5;&#xFF0C;&#x5E76;&#x4E14;&#x80FD;&#x5728;&#x53D8;&#x91CF;&#x6539;&#x53D8;&#x65F6;&#xFF0C;&#x83B7;&#x5F97;&#x4E00;&#x4E2A;&#x4FE1;&#x53F7;&#x3002;&#x4EE5;<code>QObject</code>&#x4E3A;&#x4F8B;&#xFF0C;&#x5B83;&#x5C06;<code>objectName</code>&#x7EB3;&#x5165;&#x4E86;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#xFF1A;</p>
+<pre><code class="lang-c++"><span class="hljs-comment">//qobject.h</span>
+Q_PROPERTY(QString objectName READ objectName WRITE setObjectName NOTIFY objectNameChanged)
+</code></pre>
+<h2 id="qdeclareprivate"><code>Q_DECLARE_PRIVATE</code></h2>
+<p>&#x67E5;&#x770B;<code>Q_DECLARE_PRIVATE(QObject)</code>&#x7684;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qglobal.h</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> Q_DECLARE_PRIVATE(Class) \
+    inline Class##Private* d_func() \
+    { Q_CAST_IGNORE_ALIGN(return reinterpret_cast&lt;Class##Private *&gt;(qGetPtrHelper(d_ptr));) } \
+    inline const Class##Private* d_func() const \
+    { Q_CAST_IGNORE_ALIGN(return reinterpret_cast&lt;const Class##Private *&gt;(qGetPtrHelper(d_ptr));) } \
+    friend class Class##Private;</span>
+</code></pre>
+<p>&#x52A0;&#x5165;&#x53C2;&#x6570;&#x5E76;&#x7FFB;&#x8BD1;&#x8FC7;&#x540E;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-function"><span class="hljs-keyword">inline</span> QObjectPrivate* <span class="hljs-title">d_func</span><span class="hljs-params">()</span>
+</span>{ Q_CAST_IGNORE_ALIGN(<span class="hljs-keyword">return</span> <span class="hljs-keyword">reinterpret_cast</span>&lt;QObjectPrivate *&gt;(qGetPtrHelper(d_ptr));) }
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">const</span> QObjectPrivate* <span class="hljs-title">d_func</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span>
+</span>{ Q_CAST_IGNORE_ALIGN(<span class="hljs-keyword">return</span> <span class="hljs-keyword">reinterpret_cast</span>&lt;<span class="hljs-keyword">const</span> QObjectPrivate *&gt;(qGetPtrHelper(d_ptr));) }
+<span class="hljs-keyword">friend</span> <span class="hljs-keyword">class</span> QObjectPrivate;
+</code></pre>
+<p>&#x9996;&#x5148;&#x770B;<code>qGetPtrHelper()</code>&#x65B9;&#x6CD5;&#x7684;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++">//qglobal.h
+template &lt;typename Ptr&gt; inline auto qGetPtrHelper(Ptr &amp;ptr) -&gt; decltype(ptr.operator-&gt;()) { return ptr.operator-&gt;(); }
+</code></pre>
+<p>&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x6A21;&#x677F;&#x51FD;&#x6570;&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x6307;&#x9488; <code>ptr</code> &#x6307;&#x5411;&#x7684;&#x5BF9;&#x8C61;&#x3002;&#x58F0;&#x660E;&#x91CC;<code>-&gt; decltype(ptr.operator-&gt;())</code>&#x7528;&#x4E8E;&#x63A8;&#x65AD;auto&#x7C7B;&#x578B;&#x3002;</p>
+<p><code>reinterpret_cast</code>&#x662F;&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x8FD0;&#x7B97;&#x7B26;&#xFF0C;&#x7528;&#x4E8E;&#x5F3A;&#x5236;&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#xFF0C;&#x4E0D;&#x8FDB;&#x884C;&#x4EFB;&#x4F55;&#x7C7B;&#x578B;&#x68C0;&#x67E5;&#xFF0C;&#x4EC5;&#x4EC5;&#x5BF9;&#x4E8C;&#x8FDB;&#x5236;&#x6570;&#x636E;&#x91CD;&#x65B0;&#x89E3;&#x91CA;&#x3002;</p>
+<p><code>Q_CAST_IGNORE_ALIGN</code>&#x7528;&#x4E8E;&#x7981;&#x7528;GCC&#x7F16;&#x8BD1;&#x5668;&#x7684; -Wcast-align &#x8B66;&#x544A;&#x3002;</p>
+<p>&#x90A3;&#x4E48;<code>qGetPtrHelper()</code>&#x65B9;&#x6CD5;&#x7684;&#x76EE;&#x7684;&#x662F;&#x901A;&#x8FC7;&#x8C03;&#x7528;&#x5BF9;&#x8C61;&#x7684; <code>operator-&gt;()</code> &#x6765;&#x83B7;&#x53D6;&#x5176;&#x6307;&#x9488;&#x3002;</p>
+<p><code>Q_DECLARE_PRIVATE</code>&#x5B8F;&#x5B9A;&#x4E49;&#x4E86;2&#x4E2A;&#x51FD;&#x6570;&#x548C;1&#x4E2A;&#x53CB;&#x5143;&#x7C7B;&#x3002;2&#x4E2A;<code>d_func</code>&#x53EA;&#x662F;&#x7B7E;&#x540D;&#x4E0D;&#x540C;&#xFF0C;&#x4F20;&#x5165;&#x53C2;&#x6570;<code>d_ptr</code>&#xFF0C;&#x90FD;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;<code>QObjectPrivate*</code>&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x800C;&#x4E14;&#x53CB;&#x5143;&#x7C7B;&#x7684;&#x540D;&#x79F0;&#x4E5F;&#x662F;<code>QObjectPrivate</code>&#x3002;</p>
+<p><code>d_func</code>&#x7684;&#x8FD9;&#x79CD;&#x5199;&#x6CD5;&#x6D89;&#x53CA;&#x5230;<code>Qt</code>&#x4E2D;&#x7684;&#x4E00;&#x79CD;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#xFF0C;&#x79F0;&#x4E3A; <code>PIMPL (Pointer to Implementation)</code>&#x6216;&#x8005;<code>d-pointer</code>&#x3002;&#x8FD9;&#x79CD;&#x6A21;&#x5F0F;&#x7684;&#x76EE;&#x7684;&#x662F;&#x5C06;&#x7C7B;&#x7684;&#x5B9E;&#x73B0;&#x7EC6;&#x8282;&#xFF08;&#x79C1;&#x6709;&#x6570;&#x636E;&#x548C;&#x5B9E;&#x73B0;&#x51FD;&#x6570;&#xFF09;&#x4ECE;&#x7C7B;&#x7684;&#x63A5;&#x53E3;&#x4E2D;&#x5206;&#x79BB;&#x51FA;&#x6765;&#xFF0C;&#x4EE5;&#x8FBE;&#x5230;&#x5C01;&#x88C5;&#x548C;&#x4FE1;&#x606F;&#x9690;&#x85CF;&#x7684;&#x76EE;&#x7684;&#x3002;&#x8FD9;&#x6837;&#x505A;&#x7684;&#x597D;&#x5904;&#x663E;&#x800C;&#x6613;&#x89C1;&#xFF1A;</p>
+<ul>
+<li><p>&#x66F4;&#x597D;&#x7684;&#x6269;&#x5C55;&#x6027;</p>
+<p>&#x9762;&#x5411;&#x63A5;&#x53E3;&#x7F16;&#x7A0B;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x4E0D;&#x6539;&#x53D8;&#x7C7B;&#x7684;&#x516C;&#x5171;&#x63A5;&#x53E3;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x4FEE;&#x6539;&#x4E86;&#x79C1;&#x6709;&#x5B9E;&#x73B0;&#xFF0C;&#x90A3;&#x4E48;&#x539F;&#x6709;&#x7684;&#x4EE3;&#x7801;&#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x8FD0;&#x884C;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x3002;&#x8FD9;&#x5BF9;&#x4E8E;&#x5E93;&#x7684;&#x7EF4;&#x62A4;&#x548C;&#x6269;&#x5C55;&#x975E;&#x5E38;&#x6709;&#x7528;&#x3002;</p>
+</li>
+<li><p>&#x66F4;&#x597D;&#x7684;&#x5C01;&#x88C5;</p>
+<p>&#x5BA2;&#x6237;&#x7AEF;&#x4EE3;&#x7801;&#x4E0D;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x7C7B;&#x7684;&#x79C1;&#x6709;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x6709;&#x6548;&#x9690;&#x85CF;&#x5B9E;&#x73B0;&#x7684;&#x7EC6;&#x8282;&#xFF0C;&#x4F7F;&#x5F97;&#x7C7B;&#x7684;&#x63A5;&#x53E3;&#x66F4;&#x6E05;&#x6670;&#xFF0C;&#x540C;&#x65F6;&#x51CF;&#x5C0F;&#x4E86;&#x5BF9;&#x5BA2;&#x6237;&#x7AEF;&#x4EE3;&#x7801;&#x7684;&#x5F71;&#x54CD;&#x3002;</p>
+</li>
+</ul>
+<h2 id="qobjectdata&#x548C;qobjectprivate"><code>QObjectData&#x548C;QObjectPrivate</code></h2>
+<p>&#x5173;&#x4E8E;&#x53D8;&#x91CF;<code>QScopedPointer&lt;QObjectData&gt; d_ptr</code>:</p>
+<p><code>QScopedPointer</code>&#x7C7B;&#x662F;&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#x6307;&#x5411;&#x52A8;&#x6001;&#x5206;&#x914D;&#x5BF9;&#x8C61;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x5E76;&#x5728;&#x5176;&#x9500;&#x6BC1;&#x65F6;&#x5220;&#x9664;&#x5B83;&#xFF0C;&#x786E;&#x4FDD;&#x6307;&#x5411;&#x7684;&#x5BF9;&#x8C61;&#x5728;&#x5F53;&#x524D;&#x4F5C;&#x7528;&#x57DF;&#x6D88;&#x5931;&#x65F6;&#x5C06;&#x88AB;&#x5220;&#x9664;&#x3002;</p>
+<p>&#x6240;&#x4EE5;<code>QScopedPointer&lt;QObjectData&gt;</code>&#x662F;&#x4E00;&#x4E2A;<code>QObjectData&#x7684;</code>&#x6307;&#x9488;&#x3002;&#x67E5;&#x770B;<code>QObjectData</code>&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobject.h</span>
+<span class="hljs-keyword">class</span> Q_CORE_EXPORT QObjectData {
+    <span class="hljs-comment">//&#x9632;&#x6B62;&#x5BF9;&#x8C61;&#x62F7;&#x8D1D;</span>
+    Q_DISABLE_COPY(QObjectData)
+<span class="hljs-keyword">public</span>:
+    QObjectData() = <span class="hljs-keyword">default</span>;
+    <span class="hljs-keyword">virtual</span> ~QObjectData() = <span class="hljs-number">0</span>;
+    QObject *q_ptr;
+    QObject *parent;
+    QObjectList children;
+    uint isWidget : <span class="hljs-number">1</span>;
+    uint blockSig : <span class="hljs-number">1</span>;
+    uint wasDeleted : <span class="hljs-number">1</span>;
+    uint isDeletingChildren : <span class="hljs-number">1</span>;
+    uint sendChildEvents : <span class="hljs-number">1</span>;
+    uint receiveChildEvents : <span class="hljs-number">1</span>;
+    uint isWindow : <span class="hljs-number">1</span>; <span class="hljs-comment">//for QWindow</span>
+    uint deleteLaterCalled : <span class="hljs-number">1</span>;
+    uint unused : <span class="hljs-number">24</span>;
+    <span class="hljs-keyword">int</span> postedEvents;
+    QDynamicMetaObjectData *metaObject;
+    <span class="hljs-function">QMetaObject *<span class="hljs-title">dynamicMetaObject</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> QT_DEBUG</span>
+    <span class="hljs-keyword">enum</span> { CheckForParentChildLoopsWarnDepth = <span class="hljs-number">4096</span> };
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+};
+</code></pre>
+<p>&#x7C7B;&#x4E2D;&#x5B9A;&#x4E49;&#x4E86;&#x5F88;&#x591A;&#x53D8;&#x91CF;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x80FD;&#x719F;&#x6089;&#x7684;&#x6709;<code>parent</code>&#x3001;<code>children</code>&#x3001;<code>isWidget</code>&#x7B49;&#xFF0C;&#x8FD9;&#x91CC;&#x5176;&#x5B9E;&#x5C06;<code>QObject</code>&#x7684;&#x53D8;&#x91CF;&#x5B58;&#x653E;&#x5728;&#x4E86;<code>QObjectData</code>&#x4E2D;&#x3002;</p>
+<p><code>QObjectData() = default;</code>&#x6784;&#x9020;&#x51FD;&#x6570;&#x662F;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x8BF4;&#x660E;&#x4EC0;&#x4E48;&#x90FD;&#x4E0D;&#x505A;&#x3002;</p>
+<p><code>virtual ~QObjectData() = 0;</code>&#x6790;&#x6784;&#x51FD;&#x6570;&#x662F;&#x7EAF;&#x865A;&#x51FD;&#x6570;&#xFF0C;&#x8BF4;&#x660E;&#x8FD9;&#x4E2A;&#x7C7B;&#x4E0D;&#x80FD;&#x521B;&#x9020;&#x5B9E;&#x4F8B;&#x3002;</p>
+<p>&#x4E0A;&#x4E00;&#x8282;&#x6211;&#x4EEC;&#x8BF4;&#x5230;<code>d_func</code>&#x51FD;&#x6570;&#x4F20;&#x5165;&#x53C2;&#x6570;<code>d_ptr</code>&#xFF0C;&#x8FD4;&#x56DE;&#x7684;<code>QObjectPrivate*</code>&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x800C;<code>d_ptr</code>&#x662F;<code>QObjectData</code>&#xFF0C;&#x90A3;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;<code>QObjectPrivate</code>&#x662F;<code>QObjectData</code>&#x7684;&#x5B50;&#x7C7B;&#x3002;&#x6211;&#x4EEC;&#x770B;&#x4E00;&#x770B;<code>QObjectPrivate</code>&#x7684;&#x5B9A;&#x4E49;:</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobject_p.h</span>
+<span class="hljs-keyword">class</span> Q_CORE_EXPORT QObjectPrivate : <span class="hljs-keyword">public</span> QObjectData
+{
+    Q_DECLARE_PUBLIC(QObject)
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-keyword">struct</span> ExtraData{
+        <span class="hljs-comment">//...</span>
+    }&#xFF1B;
+    <span class="hljs-comment">//&#x548C;&#x4FE1;&#x53F7;&amp;&#x69FD;&#x76F8;&#x5173;</span>
+    <span class="hljs-keyword">struct</span> ConnectionOrSignalVector{
+        <span class="hljs-comment">//...</span>
+    }&#xFF1B;
+    <span class="hljs-comment">//&#x548C;&#x4FE1;&#x53F7;&amp;&#x69FD;&#x76F8;&#x5173;</span>
+    <span class="hljs-keyword">struct</span> Connection : <span class="hljs-keyword">public</span> ConnectionOrSignalVector{
+        <span class="hljs-comment">//...</span>
+    };
+    <span class="hljs-comment">//&#x548C;&#x4FE1;&#x53F7;&amp;&#x69FD;&#x76F8;&#x5173;</span>
+    <span class="hljs-keyword">struct</span> Sender{
+        <span class="hljs-comment">//...</span>
+    };
+    <span class="hljs-comment">//&#x548C;&#x4FE1;&#x53F7;&amp;&#x69FD;&#x76F8;&#x5173;</span>
+    <span class="hljs-keyword">struct</span> ConnectionData{
+        <span class="hljs-comment">//...</span>
+    };
+    QObjectPrivate(<span class="hljs-keyword">int</span> version = QObjectPrivateVersion);
+    <span class="hljs-keyword">virtual</span> ~QObjectPrivate();
+<span class="hljs-keyword">public</span>:
+    ExtraData *extraData;
+    QAtomicPointer&lt;QThreadData&gt; threadData;
+    <span class="hljs-keyword">using</span> ConnectionDataPointer = QExplicitlySharedDataPointer&lt;ConnectionData&gt;;
+    QAtomicPointer&lt;ConnectionData&gt; connections;
+    <span class="hljs-keyword">union</span> {
+        QObject *currentChildBeingDeleted;
+        QAbstractDeclarativeData *declarativeData;
+    };
+    QAtomicPointer&lt;QtSharedPointer::ExternalRefCountData&gt; sharedRefcount;  
+}
+</code></pre>
+<p><code>QObjectPrivate</code>&#x4E2D;&#x58F0;&#x660E;&#x4E86;&#x5F88;&#x591A;&#x7ED3;&#x6784;&#x4F53;&#xFF0C;&#x4E3B;&#x8981;&#x6709;&#x4E00;&#x4E9B;&#x548C;&#x4FE1;&#x53F7;&amp;&#x69FD;&#x673A;&#x5236;&#x76F8;&#x5173;&#x7684;&#x7ED3;&#x6784;&#x4F53;&#xFF0C;&#x6211;&#x4EEC;&#x540E;&#x9762;&#x7684;&#x6587;&#x7AE0;&#x518D;&#x8BB2;&#x3002;</p>
+<p>&#x67E5;&#x770B;<code>Q_DECLARE_PUBLIC(QObject)</code>&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qglobal.h</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> Q_DECLARE_PUBLIC(Class)                                    \
+    inline Class* q_func() { return static_cast&lt;Class *&gt;(q_ptr); } \
+    inline const Class* q_func() const { return static_cast&lt;const Class *&gt;(q_ptr); } \
+    friend class Class;</span>
+</code></pre>
+<p>&#x7FFB;&#x8BD1;&#x8FC7;&#x540E;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-function"><span class="hljs-keyword">inline</span> QObject* <span class="hljs-title">q_func</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-keyword">static_cast</span>&lt;QObject *&gt;(q_ptr); } 
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">const</span> QObject* <span class="hljs-title">q_func</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">const</span> QObject *&gt;(q_ptr); } \
+<span class="hljs-keyword">friend</span> <span class="hljs-keyword">class</span> QObject;
+</code></pre>
+<p>&#x8FD9;&#x4E2A;&#x5B8F;&#x5B9E;&#x9645;&#x4E0A;&#x5B9A;&#x4E49;&#x4E86;2&#x4E2A;&#x7B7E;&#x540D;&#x4E0D;&#x4E00;&#x6837;&#x7684;&#x51FD;&#x6570;<code>q_func()</code>&#xFF0C;&#x8FD4;&#x56DE;<code>q_ptr</code>&#x6307;&#x9488;&#xFF0C;&#x58F0;&#x660E;&#x4E86;<code>QObject</code>&#x662F;&#x53CB;&#x5143;&#x7C7B;&#x3002;</p>
+<p><code>QObjectPrivate</code>&#x7684;&#x6784;&#x9020;&#x5668;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobject.cpp</span>
+QObjectPrivate::QObjectPrivate(<span class="hljs-keyword">int</span> version)
+    : threadData(<span class="hljs-literal">nullptr</span>), currentChildBeingDeleted(<span class="hljs-literal">nullptr</span>)
+{
+    checkForIncompatibleLibraryVersion(version);
+    <span class="hljs-comment">// QObjectData initialization</span>
+    q_ptr = <span class="hljs-literal">nullptr</span>;
+    parent = <span class="hljs-literal">nullptr</span>;                           <span class="hljs-comment">// no parent yet. It is set by setParent()</span>
+    isWidget = <span class="hljs-literal">false</span>;                           <span class="hljs-comment">// assume not a widget object</span>
+    blockSig = <span class="hljs-literal">false</span>;                           <span class="hljs-comment">// not blocking signals</span>
+    wasDeleted = <span class="hljs-literal">false</span>;                         <span class="hljs-comment">// double-delete catcher</span>
+    isDeletingChildren = <span class="hljs-literal">false</span>;                 <span class="hljs-comment">// set by deleteChildren()</span>
+    sendChildEvents = <span class="hljs-literal">true</span>;                     <span class="hljs-comment">// if we should send ChildAdded and ChildRemoved events to parent</span>
+    receiveChildEvents = <span class="hljs-literal">true</span>;
+    postedEvents = <span class="hljs-number">0</span>;
+    extraData = <span class="hljs-literal">nullptr</span>;
+    metaObject = <span class="hljs-literal">nullptr</span>;
+    isWindow = <span class="hljs-literal">false</span>;
+    deleteLaterCalled = <span class="hljs-literal">false</span>;
+}
+</code></pre>
+<p>&#x57FA;&#x672C;&#x4E0A;&#x662F;&#x5BF9;&#x7EE7;&#x627F;&#x4E0B;&#x6765;&#x7684;&#x53D8;&#x91CF;&#x548C;&#x81EA;&#x8EAB;&#x53D8;&#x91CF;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#x3002;</p>
+<h2 id="qobject"><code>QObject()</code></h2>
+<p>&#x5F53;&#x5B9E;&#x4F8B;&#x5316;&#x4E00;&#x4E2A;&#x7EE7;&#x627F;&#x81EA;<code>QObject</code>&#x7684;&#x5BF9;&#x8C61;&#x65F6;&#xFF0C;&#x9996;&#x5148;&#x4F1A;&#x8C03;&#x7528;<code>QObject</code>&#x7684;&#x6784;&#x9020;&#x5668;&#xFF0C;&#x6784;&#x9020;&#x5668;&#x5F00;&#x59CB;&#x6784;&#x9020;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x7684;&#x4E16;&#x754C;&#xFF0C;&#x6211;&#x4EEC;&#x67E5;&#x770B;<code>QObject</code>&#x6784;&#x9020;&#x51FD;&#x6570;<code>QObject()</code>&#x7684;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobject.cpp</span>
+QObject::QObject(QObject *parent)
+    : QObject(*<span class="hljs-keyword">new</span> QObjectPrivate, parent)
+{
+}
+
+<span class="hljs-comment">//qobject.cpp</span>
+QObject::QObject(QObjectPrivate &amp;dd, QObject *parent)
+    : d_ptr(&amp;dd)
+{
+    Q_ASSERT_X(<span class="hljs-keyword">this</span> != parent, Q_FUNC_INFO, <span class="hljs-string">&quot;Cannot parent a QObject to itself&quot;</span>);
+    Q_D(QObject);
+    d_ptr-&gt;q_ptr = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">auto</span> threadData = (parent &amp;&amp; !parent-&gt;thread()) ? parent-&gt;d_func()-&gt;threadData.loadRelaxed() : QThreadData::current();
+    threadData-&gt;ref();
+    d-&gt;threadData.storeRelaxed(
+threadData);
+    <span class="hljs-keyword">if</span> (parent) {
+        QT_TRY {
+            <span class="hljs-keyword">if</span> (!check_parent_thread(parent, parent ? parent-&gt;d_func()-&gt;threadData.loadRelaxed() : <span class="hljs-literal">nullptr</span>, 
+threadData))
+                parent = <span class="hljs-literal">nullptr</span>;
+            <span class="hljs-keyword">if</span> (d-&gt;isWidget) {
+                <span class="hljs-keyword">if</span> (parent) {
+                    d-&gt;parent = parent;
+                    d-&gt;parent-&gt;d_func()-&gt;children.append(
+<span class="hljs-keyword">this</span>);
+                }
+                <span class="hljs-comment">// no events sent here, this is done at the end of the QWidget constructor</span>
+            } <span class="hljs-keyword">else</span> {
+                setParent(parent);
+            }
+        } QT_CATCH(...) {
+            threadData-&gt;deref();
+            QT_RETHROW;
+        }
+    }
+<span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> QT_VERSION &lt; 0x60000</span>
+    qt_addObject(<span class="hljs-keyword">this</span>);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+    <span class="hljs-keyword">if</span> (Q_UNLIKELY(qtHookData[QHooks::AddQObject]))
+        <span class="hljs-keyword">reinterpret_cast</span>&lt;QHooks::AddQObjectCallback&gt;(qtHookData[QHooks::AddQObject])(<span class="hljs-keyword">this</span>);
+    Q_TRACE(QObject_ctor, <span class="hljs-keyword">this</span>);
+}
+</code></pre>
+<p><code>public</code>&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x8C03;&#x7528;&#x4E86;<code>protected</code>&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x9ED8;&#x8BA4;&#x65B0;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;<code>QObjectPrivate</code>&#x5E76;&#x4F5C;&#x4E3A;&#x6784;&#x9020;&#x51FD;&#x6570;&#x53C2;&#x6570;&#x4F20;&#x5165;&#xFF0C;&#x8D4B;&#x503C;&#x7ED9;&#x4E86;<code>d_ptr</code>&#x3002;&#x7ED3;&#x5408;&#x6211;&#x4EEC;&#x4E0A;&#x4E00;&#x8282;&#x8BB2;&#x7684;&#xFF0C;&#x53D8;&#x91CF;<code>QScopedPointer&lt;QObjectData&gt; d_ptr</code>&#x5229;&#x7528;&#x591A;&#x6001;&#x6027;&#xFF0C;&#x5728;&#x6784;&#x9020;&#x51FD;&#x6570;&#x91CC;&#x5B9E;&#x9645;&#x88AB;&#x8D4B;&#x503C;&#x4E3A;&#x5176;&#x65B0;&#x5EFA;&#x7684;&#x5B50;&#x5B9E;&#x4F8B;<code>QObjectPrivate</code>&#x3002;</p>
+<pre><code class="lang-C++">Q_ASSERT_X(<span class="hljs-keyword">this</span> != parent, Q_FUNC_INFO, <span class="hljs-string">&quot;Cannot parent a QObject to itself&quot;</span>);
+</code></pre>
+<p>&#x65AD;&#x8A00;&#xFF0C;&#x5982;&#x679C;&#x5F53;&#x524D;&#x5BF9;&#x8C61;&#x6B63;&#x5728;&#x5C1D;&#x8BD5;&#x8BBE;&#x7F6E;&#x81EA;&#x5DF1;&#x4E3A;&#x5176;&#x7236;&#x5BF9;&#x8C61;&#xFF0C;&#x5C31;&#x4F1A;&#x89E6;&#x53D1;&#x65AD;&#x8A00;&#x5931;&#x8D25;&#xFF0C;&#x5E76;&#x8F93;&#x51FA;&#x76F8;&#x5E94;&#x7684;&#x6D88;&#x606F;&#x3002;&#x8FD9;&#x91CC;&#x907F;&#x514D;&#x5BF9;&#x8C61;&#x8BBE;&#x7F6E;&#x4E3A;&#x5176;&#x81EA;&#x8EAB;&#x7684;&#x7236;&#x5BF9;&#x8C61;&#x3002;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;<code>Q_D(QObject)</code>&#xFF0C;&#x67E5;&#x770B;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qglobal.h</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> Q_D(Class) Class##Private * const d = d_func()</span>
+</code></pre>
+<p>&#x8C03;&#x7528;<code>d_func()</code>&#x5F97;&#x5230;<code>QObjectPrivate*</code> &#x5E76;&#x8D4B;&#x503C;&#x7ED9;<code>d</code>&#xFF0C;&#x6B64;&#x65F6;<code>d</code>&#x548C;<code>d_ptr</code>&#x90FD;&#x6307;&#x5411;&#x524D;&#x9762;&#x5B9E;&#x4F8B;&#x5316;&#x7684;<code>QObjectPrivate</code>&#x3002;</p>
+<pre><code class="lang-C++">d_ptr-&gt;q_ptr = <span class="hljs-keyword">this</span>;
+</code></pre>
+<p>&#x5C06;<code>QObjectPrivate-&gt;q_ptr</code>&#x8BBE;&#x7F6E;&#x4E3A;&#x81EA;&#x8EAB;&#x3002;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobject.cpp</span>
+<span class="hljs-keyword">auto</span> threadData = (parent &amp;&amp; !parent-&gt;thread()) ? parent-&gt;d_func()-&gt;threadData.loadRelaxed() : QThreadData::current();
+threadData-&gt;ref();
+d-&gt;threadData.storeRelaxed(
+threadData);
+</code></pre>
+<p>&#x68C0;&#x67E5; <code>parent</code> &#x662F;&#x5426;&#x975E;&#x7A7A;&#x4E14;&#x5B83;&#x6240;&#x5C5E;&#x7684;&#x7EBF;&#x7A0B;&#x662F;&#x5426;&#x4E3A;&#x7A7A;&#xFF0C;&#x5982;&#x679C;&#x90FD;&#x4E0D;&#x7A7A;&#x7684;&#x8BDD;&#xFF0C;&#x83B7;&#x53D6;<code>parent</code>&#x7684;&#x7EBF;&#x7A0B;&#x6570;&#x636E;&#xFF1B;&#x5426;&#x5219;&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x7684;&#x7EBF;&#x7A0B;&#x6570;&#x636E;&#x3002;&#x5C06;&#x7EBF;&#x7A0B;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x5230;&#x5BF9;&#x8C61;&#x5185;&#x90E8;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4E2D;&#x3002;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobject.cpp</span>
+<span class="hljs-keyword">if</span> (!check_parent_thread(parent, parent ? parent-&gt;d_func()-&gt;threadData.loadRelaxed() : <span class="hljs-literal">nullptr</span>, 
+threadData))
+    parent = <span class="hljs-literal">nullptr</span>;
+</code></pre>
+<p>&#x68C0;&#x67E5;<code>parent</code>&#x548C;&#x5F53;&#x524D;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x5728;&#x76F8;&#x540C;&#x7684;&#x7EBF;&#x7A0B;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x5728;&#x76F8;&#x540C;&#x7EBF;&#x7A0B;&#x4E2D;&#xFF0C;&#x5C06; <code>parent</code> &#x8BBE;&#x7F6E;&#x4E3A; <code>nullptr</code>&#x3002;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobject.cpp</span>
+<span class="hljs-keyword">if</span> (d-&gt;isWidget) {
+    <span class="hljs-keyword">if</span> (parent) {
+        d-&gt;parent = parent;
+        d-&gt;parent-&gt;d_func()-&gt;children.append(
+            <span class="hljs-keyword">this</span>);
+    }
+}<span class="hljs-keyword">else</span>{
+    <span class="hljs-comment">//...</span>
+}
+</code></pre>
+<p>&#x5982;&#x679C;&#x5BF9;&#x8C61;&#x662F;&#x4E00;&#x4E2A;<code>QWidget</code>&#xFF0C;<code>parent</code>&#x4E0D;&#x7A7A;&#xFF0C;&#x5219;&#x5EFA;&#x7ACB;&#x8D77;&#x5BF9;&#x8C61;&#x548C;<code>parent</code>&#x7684;&#x8054;&#x7CFB;&#xFF0C;&#x5BF9;&#x8C61;&#x7684;&#x7236;&#x5BF9;&#x8C61;&#x5C31;&#x662F;<code>parent</code>&#xFF0C;<code>parent</code>&#x7684;<code>children</code>&#x6DFB;&#x52A0;&#x8BE5;&#x5BF9;&#x8C61;&#x3002;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobject.cpp</span>
+<span class="hljs-keyword">if</span> (d-&gt;isWidget) {
+    <span class="hljs-comment">//...</span>
+} <span class="hljs-keyword">else</span> {
+    setParent(parent);
+}
+</code></pre>
+<p>&#x5982;&#x679C;&#x5BF9;&#x8C61;&#x4E0D;&#x662F;<code>QWidget</code>&#xFF0C;&#x901A;&#x8FC7;<code>setParent(parent)</code>&#x8BBE;&#x7F6E;&#x7236;&#x5BF9;&#x8C61;&#x3002;&#x6211;&#x4EEC;&#x770B;&#x770B;<code>setParent()</code>&#x7684;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobject.cpp</span>
+<span class="hljs-keyword">void</span> QObject::setParent(QObject *parent)
+{
+    Q_D(QObject);
+    Q_ASSERT(!d-&gt;isWidget);
+    d-&gt;setParent_helper(parent);
+}
+</code></pre>
+<p>&#x7EE7;&#x7EED;&#x8C03;&#x7528;<code>d-&gt;setParent_helper(parent)</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x89E3;&#x91CA;&#x4E86;&#x4E0D;&#x662F;<code>QWidget</code>&#x7684;&#x666E;&#x901A;&#x5BF9;&#x8C61;&#x662F;&#x600E;&#x4E48;&#x8BBE;&#x7F6E;<code>parent</code>&#x7684;&#xFF0C;&#x6211;&#x4EEC;&#x770B;&#x770B;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-keyword">void</span> QObjectPrivate::setParent_helper(QObject *o)
+{
+    Q_Q(QObject);
+    Q_ASSERT_X(q != o, Q_FUNC_INFO, <span class="hljs-string">&quot;Cannot parent a QObject to itself&quot;</span>);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> QT_DEBUG</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span> checkForParentChildLoops = qScopeGuard(
+[&amp;](){
+        <span class="hljs-keyword">int</span> depth = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">auto</span> p = parent;
+        <span class="hljs-keyword">while</span> (p) {
+            <span class="hljs-keyword">if</span> (++depth == CheckForParentChildLoopsWarnDepth) {
+                qWarning(
+<span class="hljs-string">&quot;QObject %p (class: &apos;%s&apos;, object name: &apos;%s&apos;) may have a loop in its parent-child chain; &quot;</span>
+                         <span class="hljs-string">&quot;this is undefined behavior&quot;</span>,
+                         q, q-&gt;metaObject()-&gt;className(), qPrintable(q-&gt;objectName()));
+            }
+            p = p-&gt;parent();
+        }
+    });
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+    <span class="hljs-keyword">if</span> (o == parent)
+        <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">if</span> (parent) {
+        QObjectPrivate *parentD = parent-&gt;d_func();
+        <span class="hljs-keyword">if</span> (parentD-&gt;isDeletingChildren &amp;&amp; wasDeleted
+            &amp;&amp; parentD-&gt;currentChildBeingDeleted == q) {
+            <span class="hljs-comment">// don&apos;t do anything since QObjectPrivate::deleteChildren() already</span>
+            <span class="hljs-comment">// cleared our entry in parentD-&gt;children.</span>
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> index = parentD-&gt;children.indexOf(
+q);
+            <span class="hljs-keyword">if</span> (index &lt; <span class="hljs-number">0</span>) {
+                <span class="hljs-comment">// we&apos;re probably recursing into setParent() from a ChildRemoved event, don&apos;t do anything</span>
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (parentD-&gt;isDeletingChildren) {
+                parentD-&gt;children[index] = <span class="hljs-number">0</span>;
+            } <span class="hljs-keyword">else</span> {
+                parentD-&gt;children.removeAt(
+index);
+                <span class="hljs-keyword">if</span> (sendChildEvents &amp;&amp; parentD-&gt;receiveChildEvents) {
+                    <span class="hljs-function">QChildEvent <span class="hljs-title">e</span><span class="hljs-params">(QEvent::ChildRemoved, q)</span></span>;
+                    QCoreApplication::sendEvent(parent, 
+&amp;e);
+                }
+            }
+        }
+    }
+    parent = o;
+    <span class="hljs-keyword">if</span> (parent) {
+        <span class="hljs-comment">// object hierarchies are constrained to a single thread</span>
+        <span class="hljs-keyword">if</span> (threadData != parent-&gt;d_func()-&gt;threadData) {
+            qWarning(
+<span class="hljs-string">&quot;QObject::setParent: Cannot set parent, new parent is in a different thread&quot;</span>);
+            parent = <span class="hljs-literal">nullptr</span>;
+            <span class="hljs-keyword">return</span>;
+        }
+        parent-&gt;d_func()-&gt;children.append(
+q);
+        <span class="hljs-keyword">if</span>(sendChildEvents &amp;&amp; parent-&gt;d_func()-&gt;receiveChildEvents) {
+            <span class="hljs-keyword">if</span> (!isWidget) {
+                <span class="hljs-function">QChildEvent <span class="hljs-title">e</span><span class="hljs-params">(QEvent::ChildAdded, q)</span></span>;
+                QCoreApplication::sendEvent(parent, 
+&amp;e);
+            }
+        }
+    }
+    <span class="hljs-keyword">if</span> (!wasDeleted &amp;&amp; !isDeletingChildren &amp;&amp; declarativeData &amp;&amp; QAbstractDeclarativeData::parentChanged)
+        QAbstractDeclarativeData::parentChanged(declarativeData, q, o);
+}
+</code></pre>
+<p>&#x9996;&#x5148;&#x770B;<code>Q_Q(QObject)</code>&#x8FD9;&#x4E2A;&#x5B8F;&#x7684;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qglobal.h</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> Q_Q(Class) Class * const q = q_func()</span>
+</code></pre>
+<p>&#x901A;&#x8FC7;<code>q_func()</code>&#x83B7;&#x53D6;<code>QObjectPrivate</code>&#x7684;<code>q_ptr</code>&#xFF0C;&#x5728;&#x4E0A;&#x9762;&#x6211;&#x4EEC;&#x77E5;&#x9053;<code>q_ptr</code>&#x6307;&#x5411;&#x4E86;<code>QObject</code>&#xFF0C;&#x6240;&#x4EE5;<code>q</code>&#x548C;<code>q_ptr</code>&#x90FD;&#x6307;&#x5411;<code>QObject</code>&#x3002;</p>
+<pre><code class="lang-C++">Q_ASSERT_X(q != o, Q_FUNC_INFO, <span class="hljs-string">&quot;Cannot parent a QObject to itself&quot;</span>);
+</code></pre>
+<p>&#x4E0D;&#x80FD;&#x5C06;<code>parent</code>&#x8BBE;&#x4E3A;&#x5BF9;&#x8C61;&#x672C;&#x8EAB;&#x3002;</p>
+<pre><code class="lang-C++"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> QT_DEBUG</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span> checkForParentChildLoops = qScopeGuard(
+[&amp;](){
+        <span class="hljs-keyword">int</span> depth = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">auto</span> p = parent;
+        <span class="hljs-keyword">while</span> (p) {
+            <span class="hljs-keyword">if</span> (++depth == CheckForParentChildLoopsWarnDepth) {
+                qWarning(
+<span class="hljs-string">&quot;QObject %p (class: &apos;%s&apos;, object name: &apos;%s&apos;) may have a loop in its parent-child chain; &quot;</span>
+                         <span class="hljs-string">&quot;this is undefined behavior&quot;</span>,
+                         q, q-&gt;metaObject()-&gt;className(), qPrintable(q-&gt;objectName()));
+            }
+            p = p-&gt;parent();
+        }
+    });
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+</code></pre>
+<p>&#x8FD9;&#x4E00;&#x6BB5;&#x901A;&#x8FC7;<code>warning</code>&#x53EF;&#x4EE5;&#x63A8;&#x65AD;&#x51FA;&#x662F;&#x5728;&#x68C0;&#x6D4B;&#x7236;&#x5B50;&#x5173;&#x7CFB;&#x94FE;&#x4E2D;&#x662F;&#x5426;&#x5B58;&#x5728;&#x5FAA;&#x73AF;&#xFF0C;&#x5982;&#x679C;&#x5FAA;&#x73AF;&#x94FE;&#x6DF1;&#x5EA6;&#x8D85;&#x8FC7;&#x9608;&#x503C;&#xFF0C;&#x5219;&#x8B66;&#x544A;&#x3002;</p>
+<pre><code class="lang-C++"><span class="hljs-keyword">if</span> (o == parent)
+    <span class="hljs-keyword">return</span>;
+</code></pre>
+<p>&#x5982;&#x679C;&#x5DF2;&#x7ECF;&#x8BBE;&#x7F6E;&#x8FC7;<code>parent</code>&#x4E14;&#x6CA1;&#x53D8;&#xFF0C;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#x3002;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//&#x5982;&#x679C;&#x5DF2;&#x7ECF;&#x6709;parent</span>
+<span class="hljs-keyword">if</span> (parent) {
+    <span class="hljs-comment">//&#x83B7;&#x53D6;&#x7236;&#x5BF9;&#x8C61;&#x7684;QObjectPrivate</span>
+    QObjectPrivate *parentD = parent-&gt;d_func();
+    <span class="hljs-comment">//&#x68C0;&#x67E5;&#x7236;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x6B63;&#x5728;&#x5220;&#x9664;&#x5176;&#x5B50;&#x5BF9;&#x8C61;&#xFF0C;&#x5F53;&#x524D;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x88AB;&#x5220;&#x9664;&#xFF0C;&#x524D;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x662F;&#x7236;&#x5BF9;&#x8C61;&#x6B63;&#x5728;&#x5220;&#x9664;&#x7684;&#x5B50;&#x5BF9;&#x8C61;&#x3002;</span>
+    <span class="hljs-comment">//&#x5982;&#x679C;&#x8FD9;&#x4E9B;&#x6761;&#x4EF6;&#x90FD;&#x6210;&#x7ACB;&#xFF0C;&#x5C31;&#x8DF3;&#x8FC7;&#x540E;&#x7EED;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x56E0;&#x4E3A;&#x5728;&#x5220;&#x9664;&#x5B50;&#x5BF9;&#x8C61;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x5DF2;&#x7ECF;&#x505A;&#x4E86;&#x6E05;&#x7406;&#x5DE5;&#x4F5C;&#x3002;</span>
+    <span class="hljs-keyword">if</span> (parentD-&gt;isDeletingChildren &amp;&amp; wasDeleted
+        &amp;&amp; parentD-&gt;currentChildBeingDeleted == q) {
+        <span class="hljs-comment">// don&apos;t do anything since QObjectPrivate::deleteChildren() already</span>
+        <span class="hljs-comment">// cleared our entry in parentD-&gt;children.</span>
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">//&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x5BF9;&#x8C61;&#x5728;&#x5176;&#x7236;&#x5BF9;&#x8C61;&#x7684;&#x5B50;&#x5BF9;&#x8C61;&#x5217;&#x8868;&#x4E2D;&#x7684;&#x7D22;&#x5F15;</span>
+        <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> index = parentD-&gt;children.indexOf(q);
+        <span class="hljs-comment">//&#x5982;&#x679C;&#x7D22;&#x5F15;&#x4E3A;&#x8D1F;&#x6570;&#xFF0C;&#x53EF;&#x80FD;&#x8868;&#x793A;&#x6B63;&#x5728;&#x4ECE; ChildRemoved &#x4E8B;&#x4EF6;&#x4E2D;&#x9012;&#x5F52;&#x5230; setParent()&#xFF0C;&#x8FD9;&#x65F6;&#x4E0D;&#x6267;&#x884C;&#x4EFB;&#x4F55;&#x64CD;&#x4F5C;&#x3002;</span>
+        <span class="hljs-keyword">if</span> (index &lt; <span class="hljs-number">0</span>) {
+            <span class="hljs-comment">// we&apos;re probably recursing into setParent() from a ChildRemoved event, don&apos;t do anything</span>
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (parentD-&gt;isDeletingChildren) {<span class="hljs-comment">//&#x5982;&#x679C;&#x7236;&#x5BF9;&#x8C61;&#x6B63;&#x5728;&#x5220;&#x9664;&#x5176;&#x5B50;&#x5BF9;&#x8C61;&#xFF0C;&#x5C06;&#x76F8;&#x5E94;&#x7684;&#x5B50;&#x5BF9;&#x8C61;&#x6307;&#x9488;&#x66F4;&#x65B0;&#x4E3A;0&#x3002;</span>
+            parentD-&gt;children[index] = <span class="hljs-number">0</span>;
+        } <span class="hljs-keyword">else</span> {<span class="hljs-comment">//&#x5426;&#x5219;&#xFF0C;&#x4ECE;&#x7236;&#x5BF9;&#x8C61;&#x7684;&#x5B50;&#x5BF9;&#x8C61;&#x5217;&#x8868;&#x4E2D;&#x79FB;&#x9664;&#x5F53;&#x524D;&#x5BF9;&#x8C61;</span>
+            parentD-&gt;children.removeAt(
+                index);
+            <span class="hljs-comment">//&#x53D1;&#x9001;&#x4E00;&#x4E2A; ChildRemoved &#x4E8B;&#x4EF6;&#x7ED9;&#x7236;&#x5BF9;&#x8C61;&#x3002;</span>
+            <span class="hljs-keyword">if</span> (sendChildEvents &amp;&amp; parentD-&gt;receiveChildEvents) {
+                <span class="hljs-function">QChildEvent <span class="hljs-title">e</span><span class="hljs-params">(QEvent::ChildRemoved, q)</span></span>;
+                QCoreApplication::sendEvent(parent, 
+                                            &amp;e);
+            }
+        }
+    }
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x8FD9;&#x4E00;&#x6BB5;&#x662F;&#x5728;&#x5DF2;&#x6709;<code>perent</code>&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x65AD;&#x5F00;<code>parent</code>&#x548C;&#x5F53;&#x524D;&#x5BF9;&#x8C61;&#x7684;&#x8054;&#x7CFB;&#xFF0C;&#x5E76;&#x786E;&#x4FDD;&#x5728;&#x79FB;&#x9664;&#x5B50;&#x5BF9;&#x8C61;&#x65F6;&#x505A;&#x4E86;&#x9002;&#x5F53;&#x7684;&#x6E05;&#x7406;&#x548C;&#x4E8B;&#x4EF6;&#x901A;&#x77E5;&#x3002;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4E3A;&#x4E0B;&#x9762;&#x5237;&#x65B0;<code>parent</code>&#x505A;&#x51C6;&#x5907;&#x3002;</p>
+<pre><code class="lang-C++">parent = o;
+</code></pre>
+<p>&#x771F;&#x6B63;&#x5C06;&#x4F20;&#x5165;&#x7684;&#x53C2;&#x6570;&#x8D4B;&#x503C;&#x7ED9;<code>parent</code>&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x66F4;&#x65B0;<code>parent</code>&#x3002;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//parent&#x8D4B;&#x503C;&#x540E;</span>
+<span class="hljs-keyword">if</span> (parent) {
+    <span class="hljs-comment">// object hierarchies are constrained to a single thread</span>
+    <span class="hljs-comment">// &#x5BF9;&#x8C61;&#x5C42;&#x6B21;&#x7ED3;&#x6784;&#x53D7;&#x9650;&#x4E8E;&#x5355;&#x4E2A;&#x7EBF;&#x7A0B;</span>
+    <span class="hljs-comment">// &#x6BD4;&#x8F83;&#x5F53;&#x524D;&#x5BF9;&#x8C61;&#x7684;&#x7EBF;&#x7A0B;&#x6570;&#x636E;&#x548C;&#x7236;&#x5BF9;&#x8C61;&#x7684;&#x7EBF;&#x7A0B;&#x6570;&#x636E;&#xFF0C;&#x5982;&#x679C;&#x5B83;&#x4EEC;&#x4E0D;&#x4E00;&#x81F4;</span>
+    <span class="hljs-keyword">if</span> (threadData != parent-&gt;d_func()-&gt;threadData) {
+        qWarning(
+            <span class="hljs-string">&quot;QObject::setParent: Cannot set parent, new parent is in a different thread&quot;</span>);
+        <span class="hljs-comment">//&#x7236;&#x5BF9;&#x8C61;&#x7F6E;&#x7A7A;</span>
+        parent = <span class="hljs-literal">nullptr</span>;
+        <span class="hljs-comment">//&#x76F4;&#x63A5;&#x8FD4;&#x56DE;</span>
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-comment">//&#x5C06;&#x5F53;&#x524D;&#x5BF9;&#x8C61;&#x6DFB;&#x52A0;&#x5230;&#x7236;&#x5BF9;&#x8C61;&#x7684;&#x5B50;&#x5BF9;&#x8C61;&#x5217;&#x8868;&#x4E2D;&#x3002;</span>
+    parent-&gt;d_func()-&gt;children.append(
+        q);
+    <span class="hljs-keyword">if</span>(sendChildEvents &amp;&amp; parent-&gt;d_func()-&gt;receiveChildEvents) {
+        <span class="hljs-keyword">if</span> (!isWidget) {
+            <span class="hljs-comment">//&#x5C06;&#x8FD9;&#x4E2A;&#x4E8B;&#x4EF6;&#x53D1;&#x9001;&#x7ED9;&#x7236;&#x5BF9;&#x8C61;</span>
+            <span class="hljs-function">QChildEvent <span class="hljs-title">e</span><span class="hljs-params">(QEvent::ChildAdded, q)</span></span>;
+            QCoreApplication::sendEvent(parent, 
+                                        &amp;e);
+        }
+    }
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x8FD9;&#x4E00;&#x6BB5;&#x662F;&#x5728;&#x8BBE;&#x7F6E;&#x5BF9;&#x8C61;&#x7684;&#x7236;&#x5BF9;&#x8C61;&#x540E;&#x8FDB;&#x884C;&#x4E00;&#x4E9B;&#x68C0;&#x67E5;&#xFF0C;&#x786E;&#x4FDD;&#x7236;&#x5BF9;&#x8C61;&#x7EBF;&#x7A0B;&#x6570;&#x636E;&#x548C;&#x8BE5;&#x5BF9;&#x8C61;&#x7684;&#x4E00;&#x81F4;&#xFF0C;&#x5426;&#x5219;&#x5C06;<code>parent</code>&#x8BBE;&#x4E3A;<code>nullptr</code>&#xFF0C;&#x968F;&#x540E;&#x53D1;&#x9001;&#x76F8;&#x5E94;&#x7684;<code>ChildAdded</code>&#x4E8B;&#x4EF6;&#x7ED9;<code>parent</code>&#x3002;</p>
+<p><code>setParent_helper</code>&#x51FD;&#x6570;&#x4E3B;&#x8981;&#x505A;&#x4E86;&#x4E24;&#x4EF6;&#x4E8B;:</p>
+<ul>
+<li>&#x786E;&#x4FDD;&#x65E7;<code>parent</code>&#x5B89;&#x5168;&#x64A4;&#x79BB;&#x3002;</li>
+<li>&#x786E;&#x4FDD;&#x65B0;<code>parent</code>&#x6B63;&#x786E;&#x8BBE;&#x7F6E;&#x3002;</li>
+</ul>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5BF9;&#x8C61;&#x5C42;&#x6B21;&#x7ED3;&#x6784;&#xFF08;object hierarchies&#xFF09;&#x4E2D;&#xFF0C;&#x5BF9;&#x8C61;&#x548C;<code>parent</code>&#x5FC5;&#x987B;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x3002;</p>
+<p>&#x5230;&#x8FD9;&#x91CC;<code>QObject</code>&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;<code>QObject()</code>&#x57FA;&#x672C;&#x89E3;&#x91CA;&#x5B8C;&#x4E86;&#xFF0C;&#x7B80;&#x5355;&#x6982;&#x62EC;&#x4E00;&#x4E0B;&#x6784;&#x9020;&#x51FD;&#x6570;<code>QObject()</code>&#x7684;&#x5185;&#x5BB9;&#xFF1A;</p>
+<ul>
+<li>&#x65B0;&#x5EFA;<code>QObjectPrivate</code>&#x5E76;&#x8D4B;&#x503C;&#x7ED9;<code>d_ptr</code>&#x3002;</li>
+<li>&#x8D4B;&#x503C;<code>d_ptr-&gt;q_ptr</code>&#x4E3A;&#x5BF9;&#x8C61;&#x672C;&#x8EAB;&#x3002;</li>
+<li>&#x521D;&#x59CB;&#x5316;<code>threadData</code>&#x3002;</li>
+<li>&#x68C0;&#x67E5;&#x5F53;&#x524D;&#x5BF9;&#x8C61;&#x548C;<code>parent</code>&#x662F;&#x5426;&#x5728;&#x540C;&#x4E00;&#x7EBF;&#x7A0B;&#x3002;</li>
+<li>&#x4E3A;&#x5F53;&#x524D;&#x5BF9;&#x8C61;&#x548C;<code>parent</code>&#x8BBE;&#x7F6E;&#x5173;&#x8054;&#x3002;</li>
+</ul>
+<h2 id="qdisablecopy"><code>Q_DISABLE_COPY()</code></h2>
+<p>&#x67E5;&#x770B;<code>Q_DISABLE_COPY(QObject)</code>&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qglobal.h</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> Q_DISABLE_COPY(Class) \
+    Class(const Class &amp;) = delete;\
+    Class &amp;operator=(const Class &amp;) = delete;</span>
+</code></pre>
+<p>&#x8FD9;&#x91CC;&#x5220;&#x9664;&#x4E86;&#x62F7;&#x8D1D;&#x6784;&#x9020;&#x51FD;&#x6570;&#x548C;&#x62F7;&#x8D1D;&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#x7B26;&#xFF0C;&#x786E;&#x4FDD;<code>QObject</code>&#x4E0D;&#x80FD;&#x88AB;&#x62F7;&#x8D1D;&#x6784;&#x9020;&#x6216;&#x8D4B;&#x503C;&#x3002;</p>
+<p>&#x503C;&#x5F97;&#x4E00;&#x63D0;&#x7684;&#x662F;&#xFF0C;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x5728;&#x63CF;&#x8FF0;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#xFF08;<code>Object Model</code>&#xFF09;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x7279;&#x610F;&#x63D0;&#x5230;&#x4E86;<code>Qt</code>&#x5BF9;&#x8C61;&#x7684;&#x8EAB;&#x4EFD;&#x548C;&#x503C;&#xFF08;Identity vs Value&#xFF09;&#x3002;&#x5927;&#x4F53;&#x610F;&#x601D;&#x662F;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5C06;<code>Qt</code>&#x5BF9;&#x8C61;&#x89C6;&#x4E3A;&#x8EAB;&#x4EFD;&#xFF08;identities&#xFF09;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x503C;&#xFF08;values&#xFF09;&#x3002;</p>
+<p>&#x503C;&#x901A;&#x5E38;&#x88AB;&#x590D;&#x5236;&#x6216;&#x8D4B;&#x503C;&#x3002;&#x5F53;&#x4F60;&#x590D;&#x5236;&#x6216;&#x8D4B;&#x503C;&#x4E00;&#x4E2A;&#x503C;&#x65F6;&#xFF0C;&#x4F60;&#x5F97;&#x5230;&#x7684;&#x662F;&#x539F;&#x59CB;&#x503C;&#x7684;&#x7CBE;&#x786E;&#x526F;&#x672C;&#x3002;&#x800C;&#x8BF4;&#x5230;&#x8EAB;&#x4EFD;&#xFF0C;&#x6211;&#x4EEC;&#x8BF4;&#x7684;&#x662F;&#x514B;&#x9686;&#xFF0C;&#x514B;&#x9686;&#x5E76;&#x4E0D;&#x610F;&#x5473;&#x7740;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7CBE;&#x786E;&#x7684;&#x526F;&#x672C;&#xFF0C;&#x800C;&#x662F;&#x4E00;&#x4E2A;&#x5177;&#x6709;&#x6F5C;&#x5728;&#x4E0D;&#x540C;&#x7279;&#x5F81;&#x7684;&#x65B0;&#x8EAB;&#x4EFD;&#x3002;&#x8FD9;&#x6D89;&#x53CA;&#x5230;&#x7279;&#x5B9A;&#x7684;&#x6807;&#x8BC6;&#xFF08;&#x5982;&#x5BF9;&#x8C61;&#x540D;&#x79F0;&#xFF09;&#xFF0C;&#x4F4D;&#x7F6E;&#x5173;&#x7CFB;&#xFF08;&#x5728;&#x5BF9;&#x8C61;&#x5C42;&#x6B21;&#x7ED3;&#x6784;&#x4E2D;&#x7684;&#x4F4D;&#x7F6E;&#xFF09;&#xFF0C;&#x4FE1;&#x53F7;&#x4E0E;&#x69FD;&#x7684;&#x8FDE;&#x63A5;&#x5173;&#x7CFB;&#xFF0C;&#x4EE5;&#x53CA;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x52A8;&#x6001;&#x6DFB;&#x52A0;&#x7684;&#x5C5E;&#x6027;&#x7B49;&#x7B49;&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#xFF0C;<code>QObject</code>&#x53CA;&#x5176;&#x6240;&#x6709;&#x7684;&#x5B50;&#x7C7B;&#xFF08;&#x65E0;&#x8BBA;&#x662F;&#x76F4;&#x63A5;&#x7684;&#x8FD8;&#x662F;&#x95F4;&#x63A5;&#x7684;&#xFF09;&#x90FD;&#x7981;&#x7528;&#x4E86;&#x5B83;&#x4EEC;&#x7684;&#x590D;&#x5236;&#x6784;&#x9020;&#x51FD;&#x6570;&#x548C;&#x8D4B;&#x503C;&#x8FD0;&#x7B97;&#x7B26;&#x3002;</p>
+<h2 id="&#x7ED3;&#x5C3E;">&#x7ED3;&#x5C3E;</h2>
+<p>&#x6700;&#x540E;&#x628A;&#x51FA;&#x73B0;&#x7684;&#x7B7E;&#x540D;&#x548C;&#x5934;&#x6587;&#x4EF6;&#x7B80;&#x5355;&#x5BF9;&#x5E94;&#x4E00;&#x4E0B;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x770B;&#x7684;&#x65F6;&#x5019;&#x611F;&#x89C9;&#x6709;&#x70B9;&#x4E71;&#x3002;</p>
+<p><img src="https://github.com/JoggingJack/PicRepo/blob/main/QtSrcBook/%E4%B8%80%E5%88%87%E4%BB%8EQObject%E8%AF%B4%E8%B5%B7/head.png?raw=true" alt=""></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 前言">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"一切从QObject说起","level":"1.2","depth":1,"previous":{"title":"前言","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"links":{"sidebar":{"JoggingJack'Home":"https://joggingjack.fun"}},"gitbook":"*"},"file":{"path":"一切从QObject说起.md","mtime":"2023-11-05T13:20:45.890Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-11-05T13:29:12.789Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

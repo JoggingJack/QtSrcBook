@@ -1,0 +1,602 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>元对象系统热身 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="一切从QObject说起.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="https://joggingjack.fun" target="_blank" class="custom-link">JoggingJack'Home</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="一切从QObject说起.html">
+            
+                <a href="一切从QObject说起.html">
+            
+                    
+                    一切从QObject说起
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3" data-path="元对象系统热身.html">
+            
+                <a href="元对象系统热身.html">
+            
+                    
+                    元对象系统热身
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >元对象系统热身</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h2>
+<p>&#x5B98;&#x65B9;&#x6587;&#x6863;&#x7B2C;&#x4E8C;&#x7AE0;&#x5185;&#x5BB9;&#x5C31;&#x662F;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#xFF0C;&#x5B83;&#x5728;&#x4ECB;&#x7ECD;&#x91CC;&#x63CF;&#x8FF0;&#x5230;&#xFF1A;</p>
+<p><code>Qt</code>&#x7684;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#x63D0;&#x4F9B;&#x4E86;&#x4FE1;&#x53F7;&#x548C;&#x69FD;&#x673A;&#x5236;&#xFF08;&#x7528;&#x4E8E;&#x5BF9;&#x8C61;&#x95F4;&#x7684;&#x901A;&#x4FE1;&#xFF09;&#x3001;&#x8FD0;&#x884C;&#x65F6;&#x7C7B;&#x578B;&#x4FE1;&#x606F;&#x548C;&#x52A8;&#x6001;&#x5C5E;&#x6027;&#x7CFB;&#x7EDF;&#x3002;</p>
+<p>&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#x57FA;&#x4E8E;&#x4E09;&#x4E2A;&#x8981;&#x7D20;&#xFF1A;</p>
+<ol>
+<li><strong><code>QObject</code></strong>&#x7C7B;&#x4E3A;&#x90A3;&#x4E9B;&#x53EF;&#x4EE5;&#x5229;&#x7528;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#x7684;&#x5BF9;&#x8C61;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;<strong>&#x57FA;&#x7C7B;</strong>&#x3002;</li>
+<li>&#x5728;&#x7C7B;&#x58F0;&#x660E;&#x7684;&#x79C1;&#x6709;&#x90E8;&#x5206;&#x4E2D;&#x4F7F;&#x7528;<strong><code>Q_OBJECT</code></strong>&#x5B8F;&#x7528;&#x4E8E;&#x542F;&#x7528;&#x5143;&#x5BF9;&#x8C61;&#x7279;&#x6027;&#xFF0C;&#x6BD4;&#x5982;&#x52A8;&#x6001;&#x5C5E;&#x6027;&#x3001;&#x4FE1;&#x53F7;&#x548C;&#x69FD;&#x3002;</li>
+<li>&#x5143;&#x5BF9;&#x8C61;&#x7F16;&#x8BD1;&#x5668;&#xFF08;<strong><code>moc</code></strong>&#xFF09;&#x4E3A;&#x6BCF;&#x4E2A;QObject&#x5B50;&#x7C7B;&#x63D0;&#x4F9B;<strong>&#x5FC5;&#x8981;&#x7684;&#x4EE3;&#x7801;</strong>&#x6765;&#x5B9E;&#x73B0;&#x5143;&#x5BF9;&#x8C61;&#x7279;&#x6027;&#x3002;</li>
+</ol>
+<p><code>moc</code>&#x5DE5;&#x5177;&#x8BFB;&#x53D6;<code>C++</code>&#x6E90;&#x6587;&#x4EF6;&#xFF0C;&#x5982;&#x679C;&#x53D1;&#x73B0;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x5305;&#x542B;<code>Q_OBJECT</code>&#x5B8F;&#x7684;&#x7C7B;&#x58F0;&#x660E;&#xFF0C;&#x5B83;&#x4F1A;&#x751F;&#x6210;&#x53E6;&#x4E00;&#x4E2A;<code>C++</code>&#x6E90;&#x6587;&#x4EF6;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x542B;&#x4E86;&#x8FD9;&#x4E9B;&#x7C7B;&#x7684;&#x6BCF;&#x4E2A;&#x5143;&#x5BF9;&#x8C61;&#x7684;&#x4EE3;&#x7801;&#x3002;&#x8FD9;&#x4E2A;&#x751F;&#x6210;&#x7684;&#x6E90;&#x6587;&#x4EF6;&#x88AB;#include&#x8FDB;&#x5165;&#x7C7B;&#x7684;&#x6E90;&#x6587;&#x4EF6;&#xFF0C;&#x66F4;&#x5E38;&#x89C1;&#x7684;&#x662F;&#x88AB;&#x7F16;&#x8BD1;&#x5E76;&#x94FE;&#x63A5;&#x5230;&#x7C7B;&#x7684;&#x5B9E;&#x73B0;&#x4E2D;&#x3002;</p>
+<p>&#x5F15;&#x5165;&#x8FD9;&#x4E2A;&#x7CFB;&#x7EDF;&#x7684;<strong>&#x4E3B;&#x8981;&#x539F;&#x56E0;</strong>&#x662F;&#x4FE1;&#x53F7;&#x548C;&#x69FD;&#x673A;&#x5236;&#xFF0C;&#x6B64;&#x5916;&#x5B83;&#x8FD8;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E9B;&#x989D;&#x5916;&#x529F;&#x80FD;&#xFF1A;</p>
+<ul>
+<li><code>QObject::metaObject()</code> &#x8FD4;&#x56DE;&#x4E0E;&#x8BE5;&#x7C7B;&#x76F8;&#x5173;&#x8054;&#x7684;&#x5143;&#x5BF9;&#x8C61;&#x3002;</li>
+<li><code>QMetaObject::className()</code> &#x5728;&#x8FD0;&#x884C;&#x65F6;&#x4EE5;&#x5B57;&#x7B26;&#x4E32;&#x5F62;&#x5F0F;&#x8FD4;&#x56DE;&#x7C7B;&#x540D;&#xFF0C;&#x800C;&#x65E0;&#x9700;&#x901A;&#x8FC7; C++ &#x7F16;&#x8BD1;&#x5668;&#x63D0;&#x4F9B;&#x672C;&#x5730;&#x8FD0;&#x884C;&#x65F6;&#x7C7B;&#x578B;&#x4FE1;&#x606F;&#xFF08;RTTI&#xFF09;&#x652F;&#x6301;&#x3002;</li>
+<li><code>QObject::inherits()</code> &#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x662F;&#x5728; QObject &#x7EE7;&#x627F;&#x6811;&#x5185;&#x7EE7;&#x627F;&#x4E86;&#x6307;&#x5B9A;&#x7C7B;&#x7684;&#x5B9E;&#x4F8B;&#x3002;</li>
+<li><code>QObject::tr()</code> &#x548C; <code>QObject::trUtf8()</code> &#x7528;&#x4E8E;&#x56FD;&#x9645;&#x5316;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x7FFB;&#x8BD1;&#x3002;</li>
+<li><code>QObject::setProperty()</code> &#x548C; <code>QObject::property()</code> &#x52A8;&#x6001;&#x5730;&#x901A;&#x8FC7;&#x540D;&#x79F0;&#x8BBE;&#x7F6E;&#x548C;&#x83B7;&#x53D6;&#x5C5E;&#x6027;&#x3002;</li>
+<li><code>QMetaObject::newInstance()</code> &#x6784;&#x9020;&#x8BE5;&#x7C7B;&#x7684;&#x65B0;&#x5B9E;&#x4F8B;&#x3002;</li>
+</ul>
+<p>&#x4E0A;&#x9762;&#x8BF4;&#x5230;&#x7684;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#x4E09;&#x8981;&#x7D20;&#xFF0C;&#x7B2C;3&#x70B9;<code>moc</code>&#x4F1A;&#x5728;&#x540E;&#x9762;&#x7528;&#x5355;&#x72EC;&#x7BC7;&#x7AE0;&#x5206;&#x6790;&#xFF0C;&#x4E0B;&#x9762;&#x5C31;&#x4E0D;&#x518D;&#x5C55;&#x5F00;&#xFF0C;&#x7B2C;1&#x70B9;&#x6211;&#x4EEC;&#x5728;&#x4E0A;&#x4E00;&#x7BC7;&#x4E2D;&#x505A;&#x4E86;&#x7B80;&#x5355;&#x7684;&#x5206;&#x6790;&#xFF0C;&#x672C;&#x7BC7;&#x6211;&#x4EEC;&#x770B;&#x770B;&#x7B2C;2&#x70B9;&#x2014;&#x2014;<code>Q_OBJECT</code>&#x5230;&#x5E95;&#x600E;&#x4E48;&#x542F;&#x7528;&#x4E86;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#xFF08;&#x7136;&#x800C;&#x542F;&#x7528;&#x975E;&#x5E38;&#x590D;&#x6742;&#xFF0C;&#x6211;&#x4EEC;&#x5148;&#x6D4F;&#x89C8;&#x4E2A;&#x5927;&#x6982;&#xFF0C;&#x6240;&#x4EE5;&#x6807;&#x9898;&#x53EB;&#x70ED;&#x8EAB;&#xFF09;&#x3002;</p>
+<h2 id="staticmetaobject"><code>staticMetaObject</code></h2>
+<p>&#x627E;&#x5230;&#x6E90;&#x7801;&#x4E2D;&#x51FA;&#x73B0;<code>QMetaObject</code>&#x7684;&#x5730;&#x65B9;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobject.h</span>
+<span class="hljs-keyword">class</span> Q_CORE_EXPORT Qobject{
+    Q_OBJECT
+    <span class="hljs-comment">//...</span>
+<span class="hljs-keyword">protected</span>:
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> QMetaObject staticQtMetaObject;
+    <span class="hljs-comment">//...</span>
+}
+</code></pre>
+<p>&#x548C;<code>QMetaObject</code>&#x76F8;&#x5173;&#x7684;&#x53D8;&#x91CF;&#x53EA;&#x6709;2&#x4E2A;&#x5730;&#x65B9;&#x51FA;&#x73B0;&#xFF0C;&#x65E2;&#x7136;&#x524D;&#x9762;&#x8BF4;&#x4E86;<code>Q_OBJECT</code>&#x548C;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#x76F8;&#x5173;&#xFF0C;&#x90A3;&#x6211;&#x4EEC;&#x5C31;&#x76F4;&#x63A5;&#x770B;<code>Q_OBJECT</code>&#x7684;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobjectdefs.h</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> Q_OBJECT \
+public: \
+    QT_WARNING_PUSH \
+    Q_OBJECT_NO_OVERRIDE_WARNING \
+    static const QMetaObject staticMetaObject; \
+    virtual const QMetaObject *metaObject() const; \
+    virtual void *qt_metacast(const char *); \
+    virtual int qt_metacall(QMetaObject::Call, int, void **); \
+    QT_TR_FUNCTIONS \
+private: \
+    Q_OBJECT_NO_ATTRIBUTES_WARNING \
+    Q_DECL_HIDDEN_STATIC_METACALL static void qt_static_metacall(QObject *, QMetaObject::Call, int, void **); \
+    QT_WARNING_POP \
+    struct QPrivateSignal {}; \
+    QT_ANNOTATE_CLASS(qt_qobject, <span class="hljs-string">&quot;&quot;</span>)</span>
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x5173;&#x6CE8;&#x53D8;&#x91CF;<code>static const QMetaObject staticMetaObject</code>&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;<code>QMetaObject</code>&#x7C7B;&#x578B;&#x7684;&#x9759;&#x6001;&#x53D8;&#x91CF;&#xFF0C;&#x5B83;&#x5E94;&#x8BE5;&#x662F;&#x548C;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#x76F8;&#x5173;&#xFF0C;&#x6587;&#x6863;&#x5BF9;<code>QMetaObject</code>&#x7684;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<blockquote>
+<p><code>QMetaObject</code>&#x7C7B;&#x5305;&#x542B;&#x6709;&#x5173;<code>Qt</code>&#x5BF9;&#x8C61;&#x7684;&#x5143;&#x4FE1;&#x606F;&#x3002;&#x6BCF;&#x4E2A;&#x5728;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4E2D;&#x4F7F;&#x7528;&#x7684;<code>QObject</code>&#x5B50;&#x7C7B;&#x90FD;&#x4F1A;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;<code>QMetaObject</code>&#x5B9E;&#x4F8B;&#xFF0C;&#x8BE5;&#x5B9E;&#x4F8B;&#x5B58;&#x50A8;&#x4E86;&#x8BE5;<code>QObject</code>&#x5B50;&#x7C7B;&#x7684;&#x6240;&#x6709;&#x5143;&#x4FE1;&#x606F;&#x3002;&#x6B64;&#x5BF9;&#x8C61;&#x53EF;&#x901A;&#x8FC7;<code>QObject::metaObject()</code>&#x65B9;&#x6CD5;&#x83B7;&#x5F97;&#x3002;</p>
+</blockquote>
+<p><code>QMetaObject</code>&#x5C31;&#x662F;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#x7684;&#x5173;&#x952E;&#x4E86;&#xFF0C;&#x67E5;&#x770B;<code>QMetaObject</code>&#x7684;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobjectdefs.h</span>
+<span class="hljs-keyword">struct</span> Q_CORE_EXPORT QMetaObject{
+    <span class="hljs-comment">//...</span>
+    <span class="hljs-keyword">struct</span> { <span class="hljs-comment">// private data</span>
+        <span class="hljs-keyword">const</span> QMetaObject *superdata;
+        <span class="hljs-keyword">const</span> QByteArrayData *stringdata;
+        <span class="hljs-keyword">const</span> uint *data;
+        <span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">void</span> <span class="hljs-params">(*StaticMetacallFunction)</span><span class="hljs-params">(QObject *, QMetaObject::Call, <span class="hljs-keyword">int</span>, <span class="hljs-keyword">void</span> **)</span></span>;
+        StaticMetacallFunction static_metacall;
+        <span class="hljs-keyword">const</span> QMetaObject * <span class="hljs-keyword">const</span> *relatedMetaObjects;
+        <span class="hljs-keyword">void</span> *extradata; <span class="hljs-comment">//reserved for future use</span>
+    } d;
+}
+</code></pre>
+<p><code>QMetaObject</code>&#x662F;&#x4E2A;&#x7ED3;&#x6784;&#x4F53;&#xFF0C;&#x6CA1;&#x6709;&#x6784;&#x9020;&#x51FD;&#x6570;&#x3002;&#x5FFD;&#x7565;&#x6389;&#x6240;&#x6709;&#x65B9;&#x6CD5;&#x58F0;&#x660E;&#xFF0C;&#x53EA;&#x5269;&#x4E00;&#x4E2A;&#x7ED3;&#x6784;&#x4F53;&#x53D8;&#x91CF;&#xFF0C;&#x800C;&#x4E14;&#x6211;&#x4EEC;&#x5728;<code>qobject.cpp</code>&#x4E2D;&#x4E5F;&#x6CA1;&#x6709;&#x770B;&#x5230;<code>staticMetaObject</code>&#x5BF9;&#x5E94;&#x7684;&#x521D;&#x59CB;&#x5316;&#x3002;&#x90A3;&#x4F1A;&#x4E0D;&#x4F1A;&#x5728;&#x5B50;&#x7C7B;&#x4E2D;&#x521D;&#x59CB;&#x5316;&#x4E86;&#xFF1F;&#x6211;&#x4EEC;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x7A7A;&#x7684;<code>QMainWindow</code>&#x5DE5;&#x7A0B;&#xFF0C;&#x7EE7;&#x627F;&#x5173;&#x7CFB;&#x662F;&#x8FD9;&#x6837;&#x7684;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//MainWindow-&gt;QMainWindow-&gt;QWidget-&gt;QObject</span>
+</code></pre>
+<p>&#x9057;&#x61BE;&#x7684;&#x662F;&#x6211;&#x4EEC;&#x5E76;&#x6CA1;&#x6709;&#x5728;<code>MainWindow</code>&#x3001;<code>QMainWindow</code>&#x3001;<code>QWidget</code>&#x7684;&#x6784;&#x9020;&#x5668;&#x4E2D;&#x627E;&#x5230;<code>staticMetaObject</code>&#x521D;&#x59CB;&#x5316;&#x7684;&#x75D5;&#x8FF9;&#x3002;</p>
+<h2 id="mocmainwindowcpp">moc_mainwindow.cpp</h2>
+<p>&#x60F3;&#x8D77;&#x6765;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x8BF4;<code>moc</code>&#x4F1A;&#x5904;&#x7406;<code>Q_OBJECT</code>&#x5B8F;&#xFF0C;&#x90A3;&#x5C31;&#x53BB;<code>moc</code>&#x6587;&#x4EF6;&#x627E;&#x627E;&#x2014;&#x2014;&#x679C;&#x7136;&#x627E;&#x5230;&#x4E86;<code>staticMetaObject</code>&#x76F8;&#x5173;&#x7684;&#x8BED;&#x53E5;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//moc_mainwindow.cpp</span>
+QT_INIT_METAOBJECT <span class="hljs-keyword">const</span> QMetaObject MainWindow::staticMetaObject = { {
+    &amp;QMainWindow::staticMetaObject,
+    qt_meta_stringdata_MainWindow.data,
+    qt_meta_data_MainWindow,
+    qt_static_metacall,
+    <span class="hljs-literal">nullptr</span>,
+    <span class="hljs-literal">nullptr</span>
+} };
+</code></pre>
+<p>&#x7ED3;&#x5408;<code>QMetaObject</code>&#x7684;&#x58F0;&#x660E;&#xFF0C;&#x6211;&#x4EEC;&#x5F88;&#x5BB9;&#x6613;&#x770B;&#x51FA;&#x8FD9;&#x662F;&#x5728;&#x5BF9;<code>QMetaObject</code>&#x7684;&#x53D8;&#x91CF;&#x8D4B;&#x503C;&#xFF1A;</p>
+<table>
+<thead>
+<tr>
+<th>&#x53D8;&#x91CF;&#x540D;</th>
+<th>&#x503C;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>const QMetaObject *superdata</code></td>
+<td><code>&amp;QMainWindow::staticMetaObject</code></td>
+</tr>
+<tr>
+<td><code>const QByteArrayData *stringdata</code></td>
+<td><code>qt_meta_stringdata_MainWindow.data</code></td>
+</tr>
+<tr>
+<td><code>const uint *data</code></td>
+<td><code>qt_meta_data_MainWindow</code></td>
+</tr>
+<tr>
+<td><code>StaticMetacallFunction static_metacall</code></td>
+<td><code>qt_static_metacall</code></td>
+</tr>
+<tr>
+<td><code>const QMetaObject * const *relatedMetaObjects</code></td>
+<td><code>nullptr</code></td>
+</tr>
+<tr>
+<td><code>void *extradata</code></td>
+<td><code>nullptr</code></td>
+</tr>
+</tbody>
+</table>
+<p>&#x5BF9;&#x4E8E;<code>const QMetaObject *superdata = &amp;QMainWindow::staticMetaObject;</code></p>
+<p><code>MainWindow</code>&#x7684;<code>staticMetaObject</code>&#x7684;<code>superdata</code>&#x6301;&#x6709;&#x4E86;<code>QMainWindow</code>&#x7684;<code>staticMetaObject``&#xFF0C;&#x8BF4;&#x660E;MainWindow</code>&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;<code>QMainWindow</code>&#x7684;<code>staticMetaObject</code>&#x3002;&#x7531;&#x4E8E;&#x5E76;&#x4E0D;&#x80FD;&#x770B;&#x5230;<code>moc_qmainwindow.cpp</code>&#x7B49;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x80FD;&#x4ECE;&#x53D8;&#x91CF;&#x540D;&#x5408;&#x7406;&#x731C;&#x6D4B;&#x4EFB;&#x4F55;&#x7C7B;&#x7684;<code>staticMetaObject</code>&#x90FD;&#x6301;&#x6709;&#x4E86;&#x7236;&#x7C7B;&#x7684;<code>staticMetaObject</code>&#x3002;</p>
+<p>&#x505A;&#x4E2A;&#x5B9E;&#x9A8C;&#x6D4B;&#x8BD5;&#x4E00;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//mainwindow.cpp</span>
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(<span class="hljs-keyword">new</span> Ui::MainWindow)
+{
+    <span class="hljs-comment">//...</span>
+    <span class="hljs-keyword">const</span> QMetaObject *metaDta = staticMetaObject.d.superdata;
+    <span class="hljs-keyword">while</span>(metaDta){
+        qDebug() &lt;&lt; metaDta-&gt;className();
+        metaDta = metaDta-&gt;d.superdata;
+    }
+}
+
+<span class="hljs-comment">/*
+&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#xFF1A;
+QMainWindow
+QWidget
+QObject
+*/</span>
+</code></pre>
+<p>&#x679C;&#x4E0D;&#x5176;&#x7136;&#xFF0C;&#x6253;&#x5370;&#x7ED3;&#x679C;&#x662F;&#x8F93;&#x51FA;&#x4E86;<code>MainWindow</code>&#x6240;&#x6709;&#x7236;&#x7C7B;&#x7684;<code>className</code>&#x3002;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x57FA;&#x672C;&#x53EF;&#x4EE5;&#x65AD;&#x5B9A;&#xFF0C;&#x7EE7;&#x627F;&#x94FE;&#x4E2D;<code>staticMetaObject</code>&#x7684;&#x6301;&#x6709;&#x5173;&#x7CFB;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="https://raw.gitmirror.com/JoggingJack/PicRepo/main/QtSrcBook/%E5%85%83%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E7%83%AD%E8%BA%AB/hold.png" alt=""></p>
+<p>&#x5BF9;&#x4E8E;<code>const QByteArrayData *stringdata = qt_meta_stringdata_MainWindow.data;</code></p>
+<p>&#x5728;<code>moc</code>&#x6587;&#x4EF6;&#x91CC;&#x627E;&#x5230;<code>qt_meta_stringdata_MainWindow</code>&#x53D8;&#x91CF;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//moc_mainwindow.cpp</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
+    {
+QT_MOC_LITERAL(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>) <span class="hljs-comment">// &quot;MainWindow&quot;</span>
+
+    },
+    <span class="hljs-string">&quot;MainWindow&quot;</span>
+};
+</code></pre>
+<p><code>qt_meta_stringdata_MainWindow</code>&#x662F;&#x4E00;&#x4E2A;<code>qt_meta_stringdata_MainWindow_t</code>&#x7C7B;&#x578B;&#xFF0C;&#x8FD9;&#x91CC;&#x5BF9;&#x5B83;&#x8FDB;&#x884C;&#x4E86;&#x521D;&#x59CB;&#x5316;&#x3002;&#x7EE7;&#x7EED;&#x627E;&#x5230;<code>qt_meta_stringdata_MainWindow_t</code>&#x7684;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//moc_mainwindow.cpp</span>
+<span class="hljs-keyword">struct</span> qt_meta_stringdata_MainWindow_t {
+    QByteArrayData data[<span class="hljs-number">1</span>];
+    <span class="hljs-keyword">char</span> stringdata0[<span class="hljs-number">11</span>];
+};
+</code></pre>
+<p>&#x4E5F;&#x5C31;&#x662F;&#x8BF4;<code>stringdata</code>&#x7684;&#x503C;&#x4E3A;<code>QT_MOC_LITERAL(0, 0, 10) // &quot;MainWindow&quot;</code>&#x3002;</p>
+<p>&#x7EE7;&#x7EED;&#x627E;&#x5230;<code>QT_MOC_LITERAL</code>&#x7684;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//moc_mainwindow.cpp</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_MainWindow_t, stringdata0) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )</span>
+</code></pre>
+<p>&#x8FD9;&#x4E2A;&#x5B8F;&#x7684;&#x4F5C;&#x7528;&#x662F;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x9759;&#x6001;&#x7684; <code>QByteArrayData</code> &#x7ED3;&#x6784;&#x4F53;&#xFF0C;&#x8BE5;&#x7ED3;&#x6784;&#x4F53;&#x5305;&#x542B;&#x4E86;&#x5B57;&#x7B26;&#x4E32;&#x5B57;&#x9762;&#x503C;&#x7684;&#x5143;&#x6570;&#x636E;&#x3002;&#x518D;&#x7ED3;&#x5408;&#x6CE8;&#x91CA;&#x6211;&#x4EEC;&#x63A8;&#x65AD;<code>stringdata</code>&#x4EE3;&#x8868;<code>&quot;MainWindow&quot;</code>&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x8FD9;&#x91CC;&#x4F3C;&#x4E4E;&#x662F;&#x4FDD;&#x5B58;&#x7684;&#x7C7B;&#x540D;<code>MainWindow</code>&#x3002;&#x4ECE;&#x53D8;&#x91CF;&#x540D;<code>qt_meta_stringdata_MainWindow</code>&#x63A8;&#x65AD;&#xFF0C;&#x8FD9;&#x4E2A;&#x53D8;&#x91CF;&#x5E94;&#x8BE5;&#x5C31;&#x662F;&#x4FDD;&#x5B58;&#x7684;&#x5143;&#x5BF9;&#x8C61;&#x76F8;&#x5173;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x5B57;&#x9762;&#x91CF;&#xFF0C;&#x4F46;&#x6211;&#x4EEC;&#x9ED8;&#x8BA4;&#x5DE5;&#x7A0B;&#x6CA1;&#x6709;&#x5143;&#x5BF9;&#x8C61;&#xFF0C;&#x6211;&#x4EEC;&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x52A0;&#x4E00;&#x4E2A;<code>signal</code>&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//mainwindow.h</span>
+signals:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testSignal</span><span class="hljs-params">()</span></span>;
+</code></pre>
+<p>&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;<code>qt_meta_stringdata_MainWindow</code>&#x53D8;&#x91CF;&#x7684;&#x521D;&#x59CB;&#x5316;&#x6709;&#x6240;&#x6539;&#x53D8;&#xFF0C;&#x4ECE;&#x6CE8;&#x91CA;&#x770B;&#x660E;&#x663E;&#x5305;&#x542B;&#x4E86;&#x6211;&#x4EEC;&#x6240;&#x52A0;&#x4FE1;&#x53F7;&#x7684;&#x540D;&#x79F0;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//moc_mainwindow.cpp</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
+    {
+QT_MOC_LITERAL(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>), <span class="hljs-comment">// &quot;MainWindow&quot;</span>
+QT_MOC_LITERAL(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>, <span class="hljs-number">10</span>), <span class="hljs-comment">// &quot;testSignal&quot;</span>
+QT_MOC_LITERAL(<span class="hljs-number">2</span>, <span class="hljs-number">22</span>, <span class="hljs-number">0</span>) <span class="hljs-comment">// &quot;&quot;</span>
+    },
+    <span class="hljs-string">&quot;MainWindow\0testSignal\0&quot;</span>
+};
+</code></pre>
+<p>&#x5BF9;&#x4E8E;<code>const uint *data = qt_meta_data_MainWindow&#xFF1B;</code></p>
+<p>&#x5728;<code>moc</code>&#x6587;&#x4EF6;&#x4E2D;&#x627E;&#x5230;<code>qt_meta_data_MainWindow</code>&#x5B9A;&#x4E49;&#xFF0C;&#x5B83;&#x662F;&#x4E00;&#x4E2A;<code>uint</code>&#x6570;&#x7EC4;&#xFF0C;&#x76EE;&#x524D;&#x8FD8;&#x770B;&#x4E0D;&#x51FA;&#x5B83;&#x7684;&#x4F5C;&#x7528;&#x3002;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//moc_mainwindow.cpp</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> uint qt_meta_data_MainWindow[] = {
+ <span class="hljs-comment">// content:</span>
+       <span class="hljs-number">8</span>,       <span class="hljs-comment">// revision</span>
+       <span class="hljs-number">0</span>,       <span class="hljs-comment">// classname</span>
+       <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>, <span class="hljs-comment">// classinfo</span>
+       <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>, <span class="hljs-comment">// methods</span>
+       <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>, <span class="hljs-comment">// properties</span>
+       <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>, <span class="hljs-comment">// enums/sets</span>
+       <span class="hljs-number">0</span>,    <span class="hljs-number">0</span>, <span class="hljs-comment">// constructors</span>
+       <span class="hljs-number">0</span>,       <span class="hljs-comment">// flags</span>
+       <span class="hljs-number">0</span>,       <span class="hljs-comment">// signalCount</span>
+       <span class="hljs-number">0</span>        <span class="hljs-comment">// eod</span>
+};
+</code></pre>
+<p>&#x5BF9;&#x4E8E;<code>StaticMetacallFunction static_metacall = qt_static_metacall;</code></p>
+<p>&#x5728;<code>moc</code>&#x6587;&#x4EF6;&#x91CC;&#x627E;&#x5230;<code>qt_static_metacall</code>&#x5B9A;&#x4E49;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x9ED8;&#x8BA4;&#x5DE5;&#x7A0B;&#xFF0C;&#x4F3C;&#x4E4E;&#x4E5F;&#x4E0D;&#x505A;&#x4EC0;&#x4E48;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//moc_mainwindow.cpp</span>
+<span class="hljs-keyword">void</span> MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, <span class="hljs-keyword">int</span> _id, <span class="hljs-keyword">void</span> **_a)
+{
+    Q_UNUSED(_o);
+    Q_UNUSED(_id);
+    Q_UNUSED(_c);
+    Q_UNUSED(_a);
+}
+</code></pre>
+<p>&#x5BF9;&#x4E8E;<code>const QMetaObject * const *relatedMetaObjects = nullptr;</code>&#x548C;<code>void *extradata = nullptr;</code>&#x6682;&#x65F6;&#x4E0D;&#x8BA8;&#x8BBA;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x76EE;&#x524D;&#x627E;&#x5230;&#x4E86;<code>staticMetaObject</code>&#x521D;&#x59CB;&#x5316;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x77E5;&#x9053;&#x5B83;&#x88AB;&#x8D4B;&#x503C;&#x4E86;&#x4E00;&#x4E9B;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x8FD9;&#x4E9B;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x90FD;&#x548C;<code>moc</code>&#x76F8;&#x5173;&#x3002;</p>
+<h2 id="qmetaobject&#x5176;&#x4ED6;&#x6210;&#x5458;">QMetaObject&#x5176;&#x4ED6;&#x6210;&#x5458;</h2>
+<p>&#x56DE;&#x8FC7;&#x5934;&#x6765;&#xFF0C;&#x6211;&#x4EEC;&#x770B;&#x770B;<code>QMetaObject</code>&#x7684;&#x5176;&#x4ED6;&#x6210;&#x5458;&#x3002;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobjectdefs.h</span>
+<span class="hljs-keyword">struct</span> Q_CORE_EXPORT QMetaObject
+{
+    <span class="hljs-keyword">class</span> Connection;
+    <span class="hljs-comment">//...</span>
+}
+
+<span class="hljs-keyword">class</span> Q_CORE_EXPORT QMetaObject::Connection {
+    <span class="hljs-comment">//...</span>
+};
+</code></pre>
+<p><code>Connection</code>&#xFF0C;<code>QMetaObject</code>&#x7684;&#x5185;&#x90E8;&#x7C7B;&#xFF0C;&#x6587;&#x6863;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<blockquote>
+<p>Represents a handle to a signal-slot (or signal-functor) connection.</p>
+</blockquote>
+<p>&#x5B83;&#x4EE3;&#x8868;&#x4E86;&#x4FE1;&#x53F7;-&#x69FD;&#x7684;&#x8FDE;&#x63A5;&#xFF0C;&#x90A3;&#x5C31;&#x662F;&#x8BF4;&#x6211;&#x4EEC;&#x5E73;&#x5E38;&#x4F7F;&#x7528;&#x7684;<code>connect</code>&#x90FD;&#x548C;&#x5B83;&#x76F8;&#x5173;&#xFF0C;&#x662F;&#x4E2A;&#x975E;&#x5E38;&#x91CD;&#x8981;&#x7684;&#x89D2;&#x8272;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x770B;&#x6211;&#x4EEC;&#x4E00;&#x822C;&#x4F7F;&#x7528;&#x7684;<code>connect</code>&#x7684;&#x5B9A;&#x4E49;:</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobject.h</span>
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Func1, <span class="hljs-keyword">typename</span> Func2&gt;
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">typename</span> <span class="hljs-built_in">std</span>::enable_if&lt;QtPrivate::FunctionPointer&lt;Func2&gt;::ArgumentCount == <span class="hljs-number">-1</span>, QMetaObject::Connection&gt;::<span class="hljs-function">type
+            <span class="hljs-title">connect</span><span class="hljs-params">(<span class="hljs-comment">/*...*/</span>)</span>
+    </span>{
+        <span class="hljs-comment">//...</span>
+        <span class="hljs-keyword">return</span> connectImpl(<span class="hljs-comment">/*...*/</span>);
+    }
+</code></pre>
+<p>&#x8C03;&#x7528;&#x4E86;<code>connectImpl()</code>&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobject.h</span>
+<span class="hljs-keyword">static</span> QMetaObject::<span class="hljs-function">Connection <span class="hljs-title">connectImpl</span><span class="hljs-params">(<span class="hljs-comment">/*...*/</span>)</span></span>;
+</code></pre>
+<p>&#x7684;&#x786E;&#x662F;&#x8FD4;&#x56DE;&#x4E86;<code>QMetaObject::Connection</code>&#xFF0C;&#x7531;&#x6B64;&#x53EF;&#x89C1;<code>Connection</code>&#x662F;&#x4FE1;&#x53F7;-&#x69FD;&#x7CFB;&#x7EDF;&#x7684;&#x5173;&#x952E;&#x89D2;&#x8272;&#xFF0C;&#x5B83;&#x4EE3;&#x8868;&#x4E86;&#x4E00;&#x4E2A;&#x5EFA;&#x7ACB;&#x7684;&#x8FDE;&#x63A5;&#x3002;</p>
+<p>&#x518D;&#x770B;&#x770B;&#x5176;&#x4ED6;&#x63A5;&#x53E3;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobjectdefs.h</span>
+<span class="hljs-keyword">struct</span> Q_CORE_EXPORT QMetaObject
+{
+    <span class="hljs-comment">//...</span>
+    <span class="hljs-comment">//&#x57FA;&#x672C;&#x4FE1;&#x606F;</span>
+    <span class="hljs-function"><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *<span class="hljs-title">className</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">const</span> QMetaObject *<span class="hljs-title">superClass</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">inherits</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QMetaObject *metaObject)</span> <span class="hljs-keyword">const</span> Q_DECL_NOEXCEPT</span>;
+    <span class="hljs-comment">//&#x548C;&#x7C7B;&#x4FE1;&#x606F;&#x76F8;&#x5173;</span>
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">classInfoOffset</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">classInfoCount</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">indexOfClassInfo</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name)</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function">QMetaClassInfo <span class="hljs-title">classInfo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-comment">//&#x548C;&#x65B9;&#x6CD5;&#x76F8;&#x5173;</span>
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">methodOffset</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">methodCount</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">indexOfMethod</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *method)</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function">QMetaMethod <span class="hljs-title">method</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-comment">//&#x548C;&#x679A;&#x4E3E;&#x76F8;&#x5173;</span>
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">enumeratorOffset</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">enumeratorCount</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">indexOfEnumerator</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name)</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function">QMetaEnum <span class="hljs-title">enumerator</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-comment">//&#x548C;&#x5C5E;&#x6027;&#x76F8;&#x5173;</span>
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">propertyOffset</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">propertyCount</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">indexOfProperty</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name)</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function">QMetaProperty <span class="hljs-title">property</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function">QMetaProperty <span class="hljs-title">userProperty</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-comment">//&#x548C;&#x6784;&#x9020;&#x5668;&#x76F8;&#x5173;</span>
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">constructorCount</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">indexOfConstructor</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *constructor)</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function">QMetaMethod <span class="hljs-title">constructor</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-comment">//&#x548C;&#x4FE1;&#x53F7;&#x3001;&#x69FD;&#x76F8;&#x5173;</span>
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">indexOfSignal</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *signal)</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">indexOfSlot</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *slot)</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">checkConnectArgs</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *signal, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *method)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">checkConnectArgs</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QMetaMethod &amp;signal,
+                                 <span class="hljs-keyword">const</span> QMetaMethod &amp;method)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">static</span> QByteArray <span class="hljs-title">normalizedSignature</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *method)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">static</span> QByteArray <span class="hljs-title">normalizedType</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *type)</span></span>;
+    <span class="hljs-comment">//...</span>
+}
+</code></pre>
+<p>&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x51E0;&#x4E4E;&#x63D0;&#x4F9B;&#x4E86;&#x83B7;&#x53D6;&#x6240;&#x6709;&quot;&#x5143;&#x6210;&#x5458;&quot;&#x4FE1;&#x606F;&#x7684;&#x65B9;&#x5F0F;&#xFF08;&#x597D;&#x73A9;&#x7684;&#x662F;&#x6E90;&#x7801;&#x4F5C;&#x8005;&#x5F3A;&#x8FEB;&#x75C7;&#x4E00;&#x6837;&#x5730;&#x628A;&#x529F;&#x80FD;&#x7C7B;&#x4F3C;&#x7684;&#x65B9;&#x6CD5;&#x653E;&#x5230;&#x4E86;&#x4E00;&#x8D77;&#xFF09;&#xFF0C;&#x5305;&#x62EC;&#x6784;&#x9020;&#x5668;&#x3001;&#x65B9;&#x6CD5;&#x3001;&#x5C5E;&#x6027;&#x7B49;&#xFF0C;&#x4E4B;&#x6240;&#x4EE5;&#x8BF4;&#x201C;&#x5143;&#x6210;&#x5458;&#x201D;&#xFF0C;&#x662F;&#x56E0;&#x4E3A;&#x88AB;<code>Q_INVOKABLE</code>&#x3001;<code>Q_PROPERTY</code>&#x7B49;&#x5B8F;&#x4FEE;&#x9970;&#x7684;&#x6210;&#x5458;&#x624D;&#x5177;&#x6709;&quot;&#x5143;&#x80FD;&#x529B;&quot;&#xFF08;&#x5F53;&#x7136;&#xFF0C;&#x8FD9;&#x4E5F;&#x662F;&#x540E;&#x8BDD;&#x4E86;&#xFF09;&#x3002;&#x719F;&#x6089;&#x5176;&#x4ED6;&#x8BED;&#x8A00;&#x4E2D;&#x53CD;&#x5C04;&#x7279;&#x6027;&#x7684;&#x540C;&#x5B66;&#x5E94;&#x8BE5;&#x5BF9;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x7684;&#x6784;&#x6210;&#x548C;&#x540D;&#x5B57;&#x6BD4;&#x8F83;&#x719F;&#x6089;&#xFF0C;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#x7684;&#x786E;&#x4E3A;Qt&#x63D0;&#x4F9B;&#x4E86;&#x7C7B;&#x4F3C;&#x53CD;&#x5C04;&#x7684;&#x80FD;&#x529B;&#x3002;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x662F;&#x548C;&#x4FE1;&#x53F7;-&#x69FD;&#x76F8;&#x5173;&#x7684;&#x63A5;&#x53E3;&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobjectdefs.h</span>
+<span class="hljs-keyword">struct</span> Q_CORE_EXPORT QMetaObject
+{
+    <span class="hljs-comment">// internal index-based connect</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> Connection <span class="hljs-title">connect</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QObject *sender, <span class="hljs-keyword">int</span> signal_index,
+                              <span class="hljs-keyword">const</span> QObject *receiver, <span class="hljs-keyword">int</span> method_index,
+                              <span class="hljs-keyword">int</span> type = <span class="hljs-number">0</span>, <span class="hljs-keyword">int</span> *types = <span class="hljs-literal">nullptr</span>)</span></span>;
+    <span class="hljs-comment">// internal index-based disconnect</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">disconnect</span><span class="hljs-params">(<span class="hljs-keyword">const</span> QObject *sender, <span class="hljs-keyword">int</span> signal_index,
+                           <span class="hljs-keyword">const</span> QObject *receiver, <span class="hljs-keyword">int</span> method_index)</span></span>;
+    <span class="hljs-comment">//...</span>
+    <span class="hljs-comment">// internal index-based signal activation</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">activate</span><span class="hljs-params">(QObject *sender, <span class="hljs-keyword">int</span> signal_index, <span class="hljs-keyword">void</span> **argv)</span></span>;
+    <span class="hljs-comment">//...</span>
+}
+</code></pre>
+<p>&#x4ECE;&#x6CE8;&#x91CA;&#x6765;&#x770B;&#xFF0C;&#x8FD9;&#x4E9B;&#x63A5;&#x53E3;&#x7528;&#x4E8E;&#x5185;&#x90E8;&#xFF0C;&#x662F;&#x4EE5;&#x7D22;&#x5F15;&#x4E3A;&#x57FA;&#x7840;&#x7684;&#x4E00;&#x4E9B;&#x65B9;&#x6CD5;&#xFF0C;&#x6682;&#x65F6;&#x6CA1;&#x63A5;&#x89E6;&#x5230;&#x5B83;&#x4EEC;&#x4F7F;&#x7528;&#x7684;&#x573A;&#x666F;&#x3002;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x662F;&#x5F88;&#x591A;&#x91CD;&#x8F7D;&#x6216;&#x8005;&#x6A21;&#x677F;&#x7684;<code>invokeMethod()</code>&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobjectdefs.h</span>
+<span class="hljs-keyword">struct</span> Q_CORE_EXPORT QMetaObject
+{
+    <span class="hljs-comment">//...</span>
+    invokeMethod(<span class="hljs-comment">/*...*/</span>);
+    <span class="hljs-comment">//...</span>
+}
+</code></pre>
+<p>&#x5B98;&#x65B9;&#x6587;&#x6863;&#x8BF4;&#x660E;&#xFF1A;</p>
+<blockquote>
+<p>Invokes the <em>member</em> (a signal or a slot name) on the object <em>obj</em></p>
+</blockquote>
+<p>&#x770B;&#x6765;&#x662F;&#x7528;&#x4E8E;&#x8C03;&#x7528;<code>obj</code>&#x7684;&#x4FE1;&#x53F7;&#x6216;&#x8005;&#x69FD;&#x3002;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x662F;<code>newInstance()</code>&#xFF1A;</p>
+<pre><code class="lang-C++"><span class="hljs-comment">//qobjectdefs.h</span>
+<span class="hljs-keyword">struct</span> Q_CORE_EXPORT QMetaObject
+{
+    <span class="hljs-comment">//...</span>
+    <span class="hljs-function">QObject *<span class="hljs-title">newInstance</span><span class="hljs-params">(<span class="hljs-comment">/*...*/</span>)</span></span>;
+    <span class="hljs-comment">//...</span>
+}
+</code></pre>
+<p>&#x5B83;&#x662F;&#x7528;&#x6765;&#x8C03;&#x7528;&#x6784;&#x9020;&#x51FD;&#x6570;&#x7684;&#x3002;</p>
+<h2 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h2>
+<p>&#x70ED;&#x8EAB;&#x5C31;&#x5230;&#x8FD9;&#x91CC;&#xFF0C;&#x603B;&#x7ED3;&#x4E00;&#x4E0B;&#xFF0C;<code>Q_OBJECT</code>&#x5B8F;&#x7528;&#x4E8E;&#x542F;&#x7528;&#x5143;&#x5BF9;&#x8C61;&#x7279;&#x6027;&#xFF0C;&#x5176;&#x4E2D;<code>staticMetaObject</code>&#x7684;&#x521D;&#x59CB;&#x5316;&#x5728;<code>moc_xxx.cpp</code>&#x4E2D;&#x8FDB;&#x884C;&#xFF0C;<code>moc_xxx.cpp</code>&#x5305;&#x542B;&#x4E86;&#x8BB8;&#x591A;&#x201C;&#x5143;&#x6210;&#x5458;&#x201D;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x4FE1;&#x606F;&#x548C;&#x5B9E;&#x73B0;&#x3002;<code>QMetaObject</code>&#x662F;&#x5143;&#x5BF9;&#x8C61;&#x7CFB;&#x7EDF;&#x7684;&#x5173;&#x952E;&#x6210;&#x5458;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86;&#x5143;&#x4FE1;&#x606F;&#x7684;&#x63A5;&#x53E3;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="一切从QObject说起.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 一切从QObject说起">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"元对象系统热身","level":"1.3","depth":1,"previous":{"title":"一切从QObject说起","level":"1.2","depth":1,"path":"一切从QObject说起.md","ref":"一切从QObject说起.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"links":{"sidebar":{"JoggingJack'Home":"https://joggingjack.fun"}},"gitbook":"*"},"file":{"path":"元对象系统热身.md","mtime":"2023-11-08T15:43:06.303Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-11-08T15:45:03.162Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
